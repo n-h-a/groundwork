@@ -1,0 +1,2 @@
+fastapi[standard]==0.163.0
+httpx==0.28.1
