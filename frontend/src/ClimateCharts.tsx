@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
+import { celsiusToFahrenheit, mmToInches } from './units'
 
 // Shape of the response from GET /api/climate.
 // The series are keyed by "YYYYMM", for example "202507" for July 2025.
@@ -22,8 +23,8 @@ type ClimateResponse = {
 
 type MonthRow = {
   month: string
-  temperature: number // average, in °C
-  precipitation: number // average monthly total, in mm
+  temperature: number // average, in °F
+  precipitation: number // average monthly total, in inches
 }
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -47,8 +48,9 @@ function toMonthRows(data: ClimateResponse): MonthRow[] {
     const precipitation = averageForMonth(data.precipitation, index + 1) * DAYS_IN_MONTH[index]
     return {
       month: name,
-      temperature: Math.round(temperature * 10) / 10,
-      precipitation: Math.round(precipitation),
+      // NASA POWER data is metric; the page shows US units.
+      temperature: Math.round(celsiusToFahrenheit(temperature)),
+      precipitation: Math.round(mmToInches(precipitation) * 10) / 10,
     }
   })
 }
@@ -77,13 +79,13 @@ function ClimateCharts() {
       <h2>Climate in {data.location.name}</h2>
       <p>Monthly averages for 1991-2025. Source: {data.source}.</p>
 
-      <h3>Average temperature (°C)</h3>
+      <h3>Average temperature (°F)</h3>
       <ResponsiveContainer width="100%" height={260}>
         <LineChart data={rows} margin={{ top: 10, right: 20, bottom: 0, left: 0 }}>
           <CartesianGrid stroke="#e5e4e0" vertical={false} />
           <XAxis dataKey="month" tickLine={false} />
           <YAxis tickLine={false} axisLine={false} width={40} />
-          <Tooltip formatter={(value) => [`${value} °C`, 'Temperature']} />
+          <Tooltip formatter={(value) => [`${value} °F`, 'Temperature']} />
           <Line
             dataKey="temperature"
             stroke="#eb6834"
@@ -94,13 +96,13 @@ function ClimateCharts() {
         </LineChart>
       </ResponsiveContainer>
 
-      <h3>Average precipitation, rain plus melted snow (mm per month)</h3>
+      <h3>Average precipitation, rain plus melted snow (inches per month)</h3>
       <ResponsiveContainer width="100%" height={260}>
         <BarChart data={rows} margin={{ top: 10, right: 20, bottom: 0, left: 0 }}>
           <CartesianGrid stroke="#e5e4e0" vertical={false} />
           <XAxis dataKey="month" tickLine={false} />
           <YAxis tickLine={false} axisLine={false} width={40} />
-          <Tooltip formatter={(value) => [`${value} mm`, 'Precipitation']} />
+          <Tooltip formatter={(value) => [`${value} in`, 'Precipitation']} />
           <Bar
             dataKey="precipitation"
             fill="#2a78d6"

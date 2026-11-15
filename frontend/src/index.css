@@ -1,0 +1,66 @@
+/* Page-wide basics: font, colours and spacing. */
+
+:root {
+  color-scheme: light;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  color: #0b0b0b;
+  background: #f9f9f7;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+  color: #14532d;
+}
+
+h2 {
+  margin: 48px 0 8px;
+  font-size: 1.4rem;
+}
+
+h3 {
+  margin: 24px 0 8px;
+  font-size: 1.1rem;
+}
+
+h4 {
+  font-size: 0.95rem;
+}
+
+p {
+  margin: 0 0 12px;
+}
+
+a {
+  color: #1d5fb4;
+}
+
+.lede {
+  max-width: 70ch;
+  font-size: 1.1rem;
+}
+
+footer {
+  margin-top: 48px;
+  padding-top: 16px;
+  border-top: 1px solid #e1e0d9;
+  color: #52514e;
+  font-size: 0.875rem;
+}

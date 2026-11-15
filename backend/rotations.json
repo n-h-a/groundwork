@@ -143,6 +143,7 @@
         {
           "effect": "cost",
           "topics": ["water"],
+          "tile_drained_only": true,
           "fact": "January to June are the months when most nitrate is lost through tile drains. Monitored Ohio fields with no crop growing from November to April lost about twice as much nitrate as fields with one.",
           "sources": ["osu-cover-2021"]
         }
@@ -210,6 +211,7 @@
         {
           "effect": "benefit",
           "topics": ["water"],
+          "tile_drained_only": true,
           "fact": "Monitored Ohio fields with a crop growing from November to April lost about half as much nitrate through tile drains, roughly 18 pounds per acre a year less. Wheat counted as a growing crop in that study.",
           "sources": ["osu-cover-2021"]
         },
@@ -291,6 +293,7 @@
         {
           "effect": "benefit",
           "topics": ["water"],
+          "tile_drained_only": true,
           "fact": "Monitored Ohio fields with a crop growing from November to April lost about half as much nitrate through tile drains, roughly 18 pounds per acre a year less. Clover and wheat were among the crops in that study.",
           "sources": ["osu-cover-2021"]
         },

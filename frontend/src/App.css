@@ -1,0 +1,217 @@
+/* Rotation comparison. Only the styles this section needs. */
+
+.comparison {
+  --ink-secondary: #52514e;
+  --hairline: #e1e0d9;
+  --covered: #008300;
+  --uncovered: #e1e0d9;
+  --rain: #2a78d6;
+  --rain-track: #d9e7f8;
+}
+
+.muted {
+  color: var(--ink-secondary);
+  font-size: 0.875rem;
+}
+
+/* Three cards side by side on a wide screen, stacked on a narrow one. */
+.rotation-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .rotation-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Each card has 7 sections. "subgrid" lines the sections up across cards. */
+.rotation-card {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 7;
+  row-gap: 20px;
+  padding: 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+}
+
+.rotation-card h3,
+.rotation-card h4,
+.rotation-card p,
+.rotation-card ul {
+  margin: 0;
+}
+
+.rotation-card h4 {
+  margin-bottom: 8px;
+}
+
+.rotation-card ul {
+  padding-left: 18px;
+}
+
+.rotation-card li + li {
+  margin-top: 8px;
+}
+
+/* Ground-cover calendar: 12 cells per year. */
+.month-strip {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2px;
+}
+
+.month-strip span {
+  height: 18px;
+  border-radius: 2px;
+  background: var(--uncovered);
+}
+
+.month-strip .covered {
+  background: var(--covered);
+}
+
+.month-letters span {
+  height: auto;
+  background: none;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--ink-secondary);
+}
+
+.year-row {
+  margin-top: 4px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.875rem;
+}
+
+.swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  border-radius: 2px;
+  background: var(--uncovered);
+}
+
+.swatch.covered {
+  background: var(--covered);
+}
+
+/* Precipitation figure. */
+.stat-value {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.meter {
+  height: 8px;
+  margin: 8px 0;
+  border-radius: 4px;
+  background: var(--rain-track);
+  overflow: hidden;
+}
+
+.meter div {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--rain);
+}
+
+/* Benefit / Cost / No clear change label in front of a fact. */
+.tag {
+  margin-right: 6px;
+  padding: 1px 5px;
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  color: var(--ink-secondary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Sensitive-period charts: two charts side by side on a wide screen. */
+.period {
+  margin-top: 24px;
+}
+
+.period-charts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .period-charts {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.period-charts h4,
+.period-charts p {
+  margin: 0 0 4px;
+}
+
+/* Priority buttons above the cards. */
+.priorities {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 8px;
+}
+
+.priorities button {
+  padding: 6px 12px;
+  border: 1px solid #c3c2b7;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #0b0b0b;
+  font: inherit;
+  cursor: pointer;
+}
+
+.priorities button[aria-pressed='true'] {
+  border-color: #0b0b0b;
+  background: #0b0b0b;
+  color: #ffffff;
+}
+
+/* A fact that does not relate to the chosen priority. */
+.dimmed {
+  opacity: 0.35;
+}
+
+/* Cards sit on a white surface above the page background. */
+.rotation-card {
+  background: #ffffff;
+}
+
+/* Tile-drain question and the note it adds to nitrate facts. */
+.priorities select {
+  padding: 6px 8px;
+  border: 1px solid #c3c2b7;
+  border-radius: 6px;
+  background: #ffffff;
+  font: inherit;
+}
+
+.tile-note {
+  display: block;
+  margin-top: 4px;
+  padding-left: 8px;
+  border-left: 3px solid #c3c2b7;
+  color: var(--ink-secondary);
+  font-size: 0.85rem;
+}
