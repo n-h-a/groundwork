@@ -4,6 +4,7 @@ from pathlib import Path
 import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 from datetime import date
 
@@ -157,3 +158,25 @@ def field_winters(lat: float, lon: float):
         ),
         **result,
     }
+
+
+# In production this app also serves the built frontend (frontend/dist), so the
+# whole site has one address. In development Vite serves the frontend instead,
+# and this folder does not exist.
+FRONTEND_DIST = (Path(__file__).parent.parent / "frontend" / "dist").resolve()
+
+if FRONTEND_DIST.exists():
+
+    @app.get("/{path:path}", include_in_schema=False)
+    def frontend(path: str):
+        """A built file if one matches, otherwise the app page.
+
+        The app page handles its own routes such as /compare, so a refresh on
+        any page still works. Unknown /api addresses stay a 404.
+        """
+        if path == "api" or path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="Not found")
+        file = (FRONTEND_DIST / path).resolve()
+        if path and file.is_file() and FRONTEND_DIST in file.parents:
+            return FileResponse(file)
+        return FileResponse(FRONTEND_DIST / "index.html")
