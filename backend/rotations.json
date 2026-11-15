@@ -19,7 +19,7 @@
       "title": "Benefits of incorporating wheat in a three-crop rotation",
       "publisher": "Ohio's Country Journal, 2020",
       "url": "https://ocj.com/2020/06/benefits-of-incorporating-wheat-in-a-three-crop-rotation/",
-      "note": "News article about the same Ohio State trial as huo-2022. Not an independent study."
+      "note": "News article about the same Ohio State trial as the Huo 2022 paper. Not an independent study. It reports the erosion and nematode observations listed under 'What we don't know'."
     },
     {
       "id": "osu-cover-2021",
@@ -222,8 +222,8 @@
       ],
       "information_gaps": [
         "The nitrate figure pools many cover species. It was not measured for wheat alone.",
-        "Less winter erosion with wheat was observed in the trial but not measured (ocj-2020).",
-        "Fewer soybean cyst nematodes are expected with wheat, but this was not measured (ocj-2020).",
+        "Less winter erosion with wheat was observed in the Ohio trial but not measured.",
+        "Fewer soybean cyst nematodes are expected with wheat, but this was not measured in the Ohio trial.",
         "None of our sources covers when wheat is sensitive to heat or dry weather.",
         "None of our sources gives costs or profit in dollars."
       ]
