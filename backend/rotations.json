@@ -3,6 +3,7 @@
     "what": "Facts about three crop rotations for the Dayton, Ohio area, each tied to a source.",
     "compiled_with": "Extracted from the listed sources with help from an AI assistant (Claude). Check each fact against its source before relying on it.",
     "covered_months": "Month numbers (1-12) in which a living crop is growing for the whole month. Planting and harvest months are not counted.",
+    "spans_and_events": "Which crop covers which months, and the month each crop is planted, harvested or ended. From the planting and harvest dates in huo-2022 and the clover timing in sare-red-clover.",
     "site_year": "One research site in one year. 'Five of eight site-years' means five of eight trials.",
     "topics": "Which farmer priority a fact relates to: income, soil or water. These labels are our own judgment, not taken from the sources. The page uses them to highlight facts."
   },
@@ -110,8 +111,8 @@
       "name": "Corn, soybean",
       "description": "The existing rotation: the baseline the other two are compared against.",
       "years": [
-        { "label": "Year 1: corn", "crops": ["corn"], "covered_months": [6, 7, 8, 9] },
-        { "label": "Year 2: soybeans", "crops": ["soybean"], "covered_months": [6, 7, 8, 9] }
+        { "label": "Year 1: corn", "crops": ["corn"], "covered_months": [6, 7, 8, 9], "spans": [{ "crop": "corn", "months": [6, 7, 8, 9] }], "events": [{ "month": 5, "type": "plant", "crop": "corn" }, { "month": 10, "type": "harvest", "crop": "corn" }] },
+        { "label": "Year 2: soybeans", "crops": ["soybean"], "covered_months": [6, 7, 8, 9], "spans": [{ "crop": "soybean", "months": [6, 7, 8, 9] }], "events": [{ "month": 5, "type": "plant", "crop": "soybean" }, { "month": 10, "type": "harvest", "crop": "soybean" }] }
       ],
       "for_the_farm": [
         {
@@ -165,9 +166,9 @@
       "name": "Corn, soybean, winter wheat",
       "description": "Adds winter wheat as a third crop. After the wheat harvest the field has no living crop until corn is planted.",
       "years": [
-        { "label": "Year 1: corn", "crops": ["corn"], "covered_months": [6, 7, 8, 9] },
-        { "label": "Year 2: soybeans, then wheat planted in fall", "crops": ["soybean", "winter_wheat"], "covered_months": [6, 7, 8, 9, 11, 12] },
-        { "label": "Year 3: wheat, harvested in early July", "crops": ["winter_wheat"], "covered_months": [1, 2, 3, 4, 5, 6] }
+        { "label": "Year 1: corn", "crops": ["corn"], "covered_months": [6, 7, 8, 9], "spans": [{ "crop": "corn", "months": [6, 7, 8, 9] }], "events": [{ "month": 5, "type": "plant", "crop": "corn" }, { "month": 10, "type": "harvest", "crop": "corn" }] },
+        { "label": "Year 2: soybeans, then wheat planted in fall", "crops": ["soybean", "winter_wheat"], "covered_months": [6, 7, 8, 9, 11, 12], "spans": [{ "crop": "soybean", "months": [6, 7, 8, 9] }, { "crop": "winter_wheat", "months": [11, 12] }], "events": [{ "month": 5, "type": "plant", "crop": "soybean" }, { "month": 10, "type": "harvest", "crop": "soybean" }, { "month": 10, "type": "plant", "crop": "winter_wheat" }] },
+        { "label": "Year 3: wheat, harvested in early July", "crops": ["winter_wheat"], "covered_months": [1, 2, 3, 4, 5, 6], "spans": [{ "crop": "winter_wheat", "months": [1, 2, 3, 4, 5, 6] }], "events": [{ "month": 7, "type": "harvest", "crop": "winter_wheat" }] }
       ],
       "for_the_farm": [
         {
@@ -253,9 +254,9 @@
       "name": "Corn, soybean, winter wheat with red clover",
       "description": "Same as above, with red clover seeded into the wheat in late winter. The clover keeps growing after the wheat harvest and through the next winter, and is killed before corn is planted.",
       "years": [
-        { "label": "Year 1: clover until spring, then corn", "crops": ["red_clover", "corn"], "covered_months": [1, 2, 3, 6, 7, 8, 9] },
-        { "label": "Year 2: soybeans, then wheat planted in fall", "crops": ["soybean", "winter_wheat"], "covered_months": [6, 7, 8, 9, 11, 12] },
-        { "label": "Year 3: wheat, then clover after the July harvest", "crops": ["winter_wheat", "red_clover"], "covered_months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
+        { "label": "Year 1: clover until spring, then corn", "crops": ["red_clover", "corn"], "covered_months": [1, 2, 3, 6, 7, 8, 9], "spans": [{ "crop": "red_clover", "months": [1, 2, 3] }, { "crop": "corn", "months": [6, 7, 8, 9] }], "events": [{ "month": 4, "type": "end", "crop": "red_clover" }, { "month": 5, "type": "plant", "crop": "corn" }, { "month": 10, "type": "harvest", "crop": "corn" }] },
+        { "label": "Year 2: soybeans, then wheat planted in fall", "crops": ["soybean", "winter_wheat"], "covered_months": [6, 7, 8, 9, 11, 12], "spans": [{ "crop": "soybean", "months": [6, 7, 8, 9] }, { "crop": "winter_wheat", "months": [11, 12] }], "events": [{ "month": 5, "type": "plant", "crop": "soybean" }, { "month": 10, "type": "harvest", "crop": "soybean" }, { "month": 10, "type": "plant", "crop": "winter_wheat" }] },
+        { "label": "Year 3: wheat, then clover after the July harvest", "crops": ["winter_wheat", "red_clover"], "covered_months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "spans": [{ "crop": "winter_wheat", "months": [1, 2, 3, 4, 5, 6] }, { "crop": "red_clover", "months": [7, 8, 9, 10, 11, 12] }], "events": [{ "month": 3, "type": "plant", "crop": "red_clover" }, { "month": 7, "type": "harvest", "crop": "winter_wheat" }] }
       ],
       "for_the_farm": [
         {

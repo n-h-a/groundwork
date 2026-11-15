@@ -22,6 +22,8 @@ export type RotationYear = {
   label: string
   crops: string[]
   covered_months: number[] // 1 = January ... 12 = December
+  spans: { crop: string; months: number[] }[] // which crop covers which months
+  events: { month: number; type: 'plant' | 'harvest' | 'end'; crop: string }[]
 }
 
 export type Rotation = {

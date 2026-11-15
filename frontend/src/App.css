@@ -161,92 +161,67 @@
 
 /* ---------- Compare page ---------- */
 
-/* Three cards side by side on a wide screen, stacked on a narrow one. */
-.rotation-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  margin-top: 16px;
-}
-
-@media (min-width: 960px) {
-  .rotation-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Each card has 7 sections. "subgrid" lines the sections up across cards. */
-.rotation-card {
-  display: grid;
-  grid-template-rows: subgrid;
-  grid-row: span 7;
-  row-gap: 22px;
-  padding: 20px;
-  border: 2px solid var(--border);
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 18px;
   border-radius: 12px;
-  background: #ffffff;
+  background: var(--surface);
 }
 
-.rotation-card h3,
-.rotation-card h4,
-.rotation-card p,
-.rotation-card ul {
+.controls__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.controls__group--inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.controls__group p {
   margin: 0;
 }
 
-.rotation-card h3 {
-  margin-top: 6px;
-  font-size: 1.25rem;
+.controls__label {
+  font-weight: 700;
 }
 
-.rotation-card h4 {
-  margin-bottom: 8px;
+.controls__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.rotation-card ul {
-  padding-left: 20px;
+.option,
+.controls select {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 8px 14px;
+  border: 2px solid var(--border-strong);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
 }
 
-.rotation-card li + li {
-  margin-top: 10px;
-}
-
-/* Ground-cover calendar: 12 cells per year. */
-.month-strip {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 2px;
-}
-
-.month-strip span {
-  height: 22px;
-  border: 1px solid var(--soil-edge);
-  border-radius: 3px;
-  background: var(--soil);
-}
-
-.month-strip .covered {
-  border-color: var(--green);
-  background: var(--green);
-}
-
-.month-letters span {
-  height: auto;
-  border: 0;
-  background: none;
-  text-align: center;
-  font-size: 0.75rem;
-  color: var(--ink-secondary);
-}
-
-.year-row {
-  margin-top: 6px;
+.option[aria-pressed='true'] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
+  gap: 8px 18px;
   font-size: 0.9rem;
   color: var(--ink-secondary);
 }
@@ -255,37 +230,305 @@
   display: inline-block;
   width: 16px;
   height: 16px;
-  margin-right: 6px;
+  margin-right: 4px;
   vertical-align: -3px;
   border: 1px solid var(--soil-edge);
   border-radius: 3px;
   background: var(--soil);
 }
 
-.swatch.covered {
+.swatch--covered {
   border-color: var(--green);
   background: var(--green);
 }
 
-/* Bare-soil rain figure. */
-.stat-value {
-  font-size: 3rem;
+.swatch--rain,
+.swatch--rain-light {
+  width: 6px;
+  border: 0;
+  border-radius: 1px;
+  background: var(--rain);
+}
+
+.swatch--rain-light {
+  background: var(--rain-light);
+}
+
+/* One row per rotation. */
+.rot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.rot-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+
+.rot-row--yours {
+  border-color: var(--ink);
+}
+
+.rot-row__main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 28px;
+  align-items: flex-start;
+}
+
+.rot-row__figure {
+  flex: 0 0 170px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rot-row__pct {
+  font-size: 4rem;
   font-weight: 700;
   line-height: 1;
 }
 
-.meter {
-  height: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  background: var(--rain-light);
-  overflow: hidden;
+.rot-row__pct-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
 }
 
-.meter div {
-  height: 100%;
-  border-radius: 5px;
+.rot-row__text {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rot-row__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.rot-row__title h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.rot-row__headline {
+  margin: 0;
+  font-weight: 700;
+}
+
+.rot-row__exposure {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ink-secondary);
+}
+
+.rot-row__strips {
+  flex: 1 1 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.rot-row__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 16px;
+  border-top: 2px solid var(--border);
+}
+
+.rot-row__detail > p {
+  margin: 0;
+}
+
+.badge.badge--dark {
+  background: var(--ink);
+  color: #ffffff;
+}
+
+/* Calendar strip with precipitation underneath. */
+.strip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.strip__months,
+.strip__letters {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2px;
+}
+
+.strip__letters span {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--ink-secondary);
+}
+
+.strip__month {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.strip__cell {
+  height: 24px;
+  border: 1px solid var(--soil-edge);
+  border-radius: 3px;
+  background: var(--soil);
+}
+
+.strip__cell--covered {
+  border-color: var(--green);
+  background: var(--green);
+}
+
+.strip__rain-area {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 26px;
+}
+
+.strip__rain {
+  width: 6px;
+  border-radius: 1px;
   background: var(--rain);
+}
+
+.strip__rain--covered {
+  background: var(--rain-light);
+}
+
+.strip__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--ink-secondary);
+}
+
+/* Season timeline inside an open row. */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.timeline__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
+}
+
+.timeline__legend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.timeline__year-label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.timeline__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.timeline__month {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 3px;
+}
+
+.timeline__markers {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  height: 12px;
+}
+
+.timeline__band {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border: 1px solid var(--soil-edge);
+  border-radius: 4px;
+  background: var(--soil);
+}
+
+.timeline__band--covered {
+  border-color: var(--green);
+  background: #cfe8c6;
+}
+
+.timeline__rain-area {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 40px;
+}
+
+.timeline__letter {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--ink-secondary);
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot--plant {
+  background: var(--ink);
+}
+
+.dot--harvest {
+  border: 2px solid var(--ink);
+}
+
+/* Evidence lists inside an open row. */
+.evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px 28px;
+}
+
+.evidence-grid h4 {
+  margin: 0 0 8px;
+}
+
+.fact-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.fact-list li + li {
+  margin-top: 10px;
 }
 
 /* Benefit / Cost / No clear change label in front of a fact. */
@@ -302,40 +545,6 @@
   white-space: nowrap;
 }
 
-/* Priority buttons and the tile-drain question. */
-.priorities {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin: 16px 0 8px;
-}
-
-.priorities > span:first-child,
-.priorities label {
-  font-weight: 700;
-  margin-right: 4px;
-}
-
-.priorities button,
-.priorities select {
-  min-height: 48px;
-  padding: 8px 14px;
-  border: 2px solid var(--border-strong);
-  border-radius: 8px;
-  background: #ffffff;
-  color: var(--ink);
-  font: inherit;
-  cursor: pointer;
-}
-
-.priorities button[aria-pressed='true'] {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: #ffffff;
-  font-weight: 700;
-}
-
 /* A fact that does not relate to the chosen priority. */
 .dimmed {
   opacity: 0.35;
@@ -348,6 +557,143 @@
   border-left: 3px solid var(--border-strong);
   color: var(--ink-secondary);
   font-size: 0.85rem;
+}
+
+/* Head-to-head comparison. */
+.h2h {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+}
+
+.h2h__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.h2h__top h2 {
+  margin: 0;
+}
+
+.h2h__band {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.h2h__band > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.h2h__band-alt {
+  text-align: right;
+}
+
+.h2h__pct {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.h2h__pct--alt {
+  color: var(--green);
+}
+
+.h2h__diff {
+  align-items: center;
+  text-align: center;
+}
+
+.h2h__diff-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #9a3412;
+}
+
+.h2h__diff-value--better {
+  color: var(--green);
+}
+
+.h2h__table {
+  display: flex;
+  flex-direction: column;
+}
+
+.h2h__row {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.5fr) minmax(0, 1fr) minmax(0, 1fr);
+  border-top: 2px solid var(--border);
+}
+
+.h2h__row:first-child {
+  border-top: 0;
+}
+
+.h2h__label,
+.h2h__cell {
+  padding: 12px;
+}
+
+.h2h__label {
+  font-weight: 700;
+}
+
+.h2h__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-left: 2px solid var(--border);
+  min-width: 0;
+}
+
+.h2h__cell--alt {
+  background: #f6faf4;
+}
+
+.h2h__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+@media (max-width: 720px) {
+  .h2h__band {
+    grid-template-columns: 1fr;
+  }
+
+  .h2h__band-alt {
+    text-align: left;
+  }
+
+  .h2h__row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .h2h__label {
+    grid-column: 1 / -1;
+    padding-bottom: 0;
+  }
+
+  .h2h__cell {
+    border-left: 0;
+  }
+
+  .rot-row__figure {
+    flex-basis: 100%;
+  }
 }
 
 /* ---------- Weather page ---------- */

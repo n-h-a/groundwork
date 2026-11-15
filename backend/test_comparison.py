@@ -139,6 +139,17 @@ class RotationsFileTest(unittest.TestCase):
                 for crop_id in year["crops"]:
                     self.assertIn(crop_id, self.data["crops"])
 
+    def test_covered_months_match_the_crop_spans(self):
+        for rotation in self.data["rotations"]:
+            for year in rotation["years"]:
+                span_months = sorted(m for span in year["spans"] for m in span["months"])
+                self.assertEqual(span_months, sorted(year["covered_months"]), year["label"])
+                for span in year["spans"]:
+                    self.assertIn(span["crop"], year["crops"], year["label"])
+                for event in year["events"]:
+                    self.assertIn(event["type"], ["plant", "harvest", "end"])
+                    self.assertIn(event["month"], range(1, 13))
+
     def test_covered_months_are_real_months(self):
         for rotation in self.data["rotations"]:
             for year in rotation["years"]:
