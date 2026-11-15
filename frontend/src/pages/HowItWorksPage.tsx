@@ -27,33 +27,115 @@ function HowItWorksPage() {
   const field = useField()
   const { data, error } = useCompareData(field.lat, field.lon, field.tillage, field.tile)
 
+  // DRAFT TEXT: every section on this page is worth rewording in your own words.
   return (
     <section className="stack">
-      <h1>How it works</h1>
+      <div>
+        <h1>How it works</h1>
+        <p className="lede">
+          Groundwork puts NASA climate and satellite data, the USDA crop map and published Ohio research side by
+          side for one field. Every number is a plain calculation described on this page; nothing is predicted by
+          a model or written by AI while you use it.
+        </p>
+      </div>
 
       <div>
-        <h2>How to read this, and its limits</h2>
+        <h2>Where the data comes from</h2>
+        <div className="table-scroll">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Used for</th>
+                <th scope="col">Detail</th>
+                <th scope="col">Years</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">
+                  <a href="https://power.larc.nasa.gov/" target="_blank" rel="noreferrer">
+                    NASA POWER
+                  </a>{' '}
+                  daily data (MERRA-2): precipitation, daily high, root zone soil wetness
+                </th>
+                <td>Bare-soil rain, sensitive weeks, the Weather page</td>
+                <td>An area about 50 km across</td>
+                <td>1991–2025</td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <a href="https://lpdaac.usgs.gov/products/mod13q1v061/" target="_blank" rel="noreferrer">
+                    NASA MODIS
+                  </a>{' '}
+                  vegetation index (MOD13Q1 NDVI), through the ORNL DAAC
+                </th>
+                <td>Your winters, seen from space</td>
+                <td>250 m squares, every 16 days</td>
+                <td>The last five winters</td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <a href="https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php" target="_blank" rel="noreferrer">
+                    USDA Cropland Data Layer
+                  </a>
+                  , through CroplandCROS
+                </th>
+                <td>Your crop history and the rotation guess</td>
+                <td>30 m squares (10 m from 2024)</td>
+                <td>2008–2025</td>
+              </tr>
+              <tr>
+                <th scope="row">Ohio research and extension (sources below)</th>
+                <td>The findings on Compare</td>
+                <td>Mostly a few research sites</td>
+                <td>Varies</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="muted">Map images: USGS National Map imagery and OpenStreetMap.</p>
+      </div>
+
+      <div>
+        <h2>How each number is worked out</h2>
         <ul className="spaced-list">
-          <li>A month counts as covered only if a living crop is growing for the whole month.</li>
           <li>
-            Soil: the only soil input is the tile-drain question. Soil type, slope and drainage class are not
-            included yet.
+            <strong>Rain and snow on bare soil.</strong> For each calendar month, the average precipitation at your
+            field over 1991–2025. Each rotation has a calendar of when a living crop is growing, based on typical
+            Ohio planting and harvest dates. A month counts as covered only if a crop is growing for the whole
+            month. The figure is the precipitation in uncovered months, averaged over the years of the rotation.
+            The percentage is that figure as a share of the year's total.
           </li>
           <li>
-            The precipitation figure shows exposure: how much rain and snow falls while nothing is growing. It is
-            not a measurement of runoff or nutrient loss.
+            <strong>Your crop history and rotation guess.</strong> The crop the USDA map recorded at your point
+            each year. If the last six years were only corn and soybeans, Groundwork guesses corn and soybeans; if
+            wheat appears as well, corn, soybeans and wheat. Otherwise it makes no guess. You can always change it.
           </li>
-          {data && (
-            <li>
-              Climate data: {data.climate_source}. It describes an area about 50 km across, not a single field.
-            </li>
-          )}
-          <li>Crop facts come from the sources below. Most are from trials at a small number of sites.</li>
-          <li>This tool supports your own judgment and local advice. It does not replace them.</li>
+          <li>
+            <strong>Your winters, seen from space.</strong> For each winter (December to March), the middle value
+            of the cloud-free MODIS measurements, shown as a share of the field's greenest point the summer before
+            (June to September). A higher share means more was growing. Groundwork never says a field had a cover
+            crop: an Indiana study found this kind of measurement alone is not enough to tell (
+            <a href="https://doi.org/10.3390/rs13101998" target="_blank" rel="noreferrer">
+              Remote Sensing, 2021
+            </a>
+            ).
+          </li>
+          <li>
+            <strong>Sensitive weeks.</strong> The weeks when heat or dry weather costs corn and soybeans the most
+            yield, dated from Ohio crop progress reports. For each year, the precipitation, average soil wetness
+            and, for corn, the number of days at 95 °F or hotter in those weeks.
+          </li>
+          <li>
+            <strong>Is it changing?</strong> The NASA record split into 1991–2007 and 2008–2025. For each half, the
+            average number of days with 1 inch or more of rain, the average number of days at 90 °F or hotter,
+            and the average yearly precipitation. These thresholds are round numbers chosen to be easy to picture,
+            not research cutoffs.
+          </li>
         </ul>
       </div>
 
-      {/* DRAFT TEXT: rewrite in your own words. */}
       <div>
         <h2>Does the research fit your field?</h2>
         <p>
@@ -103,6 +185,54 @@ function HowItWorksPage() {
               </ul>
             </details>
           ))}
+      </div>
+
+      <div>
+        <h2>Limits</h2>
+        <ul className="spaced-list">
+          <li>
+            The bare-soil figure shows exposure: how much rain and snow falls while nothing is growing. It is not
+            a measurement of runoff, erosion or nutrient loss.
+          </li>
+          <li>
+            NASA POWER describes an area about 50 km across. It smooths out local storms, so it counts fewer
+            heavy-rain days than a rain gauge on your farm would.
+          </li>
+          <li>
+            A 250 m MODIS square is bigger than many fields, so it can include field edges, roads, trees or a
+            neighbour's field.
+          </li>
+          <li>The USDA crop map is sometimes wrong for a single point and year, especially near field edges.</li>
+          <li>
+            Soil: the only soil input is the tile-drain question. Soil type, slope and drainage class are not
+            included yet.
+          </li>
+          <li>Crop calendars are statewide typical dates. Your planting and harvest dates may differ.</li>
+          <li>
+            Groundwork covers Ohio only, because its crop research comes from Ohio. It supports your own judgement
+            and local advice. It does not replace them.
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2>Your location</h2>
+        <p>
+          The point you choose is sent to the Groundwork server, which looks it up in the services above. The
+          results are saved on the server by coordinates so the next visit is faster. Nothing else about you is
+          collected.
+        </p>
+      </div>
+
+      <div>
+        <h2>How AI was used</h2>
+        <p>
+          Groundwork was built for the NASA Space Apps Challenge 2026 with help from Claude, an AI assistant made
+          by Anthropic. Claude helped with planning the project, finding data services, writing code and tests, designing the
+          icons, and drafting page text. The Groundwork team reviewed every change, wrote code, came up with ideas, read the research sources, and checked
+          the findings against them. The tool itself uses no AI: everything you see is calculated from the data
+          above or quoted from the sources below.
+        </p>
       </div>
 
       <div>

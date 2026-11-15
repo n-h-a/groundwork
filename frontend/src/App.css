@@ -122,6 +122,32 @@
   margin-top: 8px;
 }
 
+.table-scroll {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  padding: 10px 12px 10px 0;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table thead th {
+  border-bottom: 2px solid var(--ink);
+}
+
+.data-table tbody th {
+  font-weight: 400;
+}
+
 .icon-row {
   display: inline-flex;
   gap: 3px;

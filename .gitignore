@@ -224,6 +224,7 @@ __marimo__/
 backend/data/*
 !backend/data/cdl_class_names.json
 !backend/data/power_daily_39.76_-84.19.json
+!backend/data/power_daily_39.72_-84.59.json
 !backend/data/cdl_39.7200_-84.5900.json
 !backend/data/modis_39.7200_-84.5900_2026.json
 !backend/data/cdl_39.7000_-84.5900.json
