@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import ClimateCharts from './ClimateCharts'
 
 function App() {
   const [apiStatus, setApiStatus] = useState('Checking API...')
@@ -15,6 +16,7 @@ function App() {
     <main>
       <h1>Groundwork</h1>
       <p>{apiStatus}</p>
+      <ClimateCharts />
     </main>
   )
 }
