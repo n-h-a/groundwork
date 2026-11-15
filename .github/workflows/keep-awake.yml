@@ -1,0 +1,21 @@
+# Render's free tier puts the site to sleep after 15 minutes without visitors,
+# and the next visit then takes about a minute. This asks the site for its
+# health check every 5 minutes so it stays awake for judges.
+#
+# GitHub may run scheduled jobs late, so this is best effort. Delete this file
+# to stop it.
+name: Keep the site awake
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask the site for its health check
+        run: curl --fail --silent --show-error --max-time 120 https://groundwork-d21p.onrender.com/api/health

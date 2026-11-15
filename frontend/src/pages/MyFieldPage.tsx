@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, useLocation } from 'react-router'
 import CropIcon from '../CropIcon'
@@ -46,17 +46,39 @@ const CATEGORY_ICONS: Record<string, IconName[]> = {
   'Dbl Crop WinWht/Soybeans': ['wheat', 'soybean'],
 }
 
+// Short names for the crop map classes most likely to turn up in Ohio, so
+// they fit in a small box.
 const SHORT_NAMES: Record<string, string> = {
   'Dbl Crop WinWht/Soybeans': 'Wheat, then soybeans',
+  'Dbl Crop WinWht/Corn': 'Wheat, then corn',
   'Grassland/Pasture': 'Pasture',
-  'Developed/Open Space': 'Developed',
-  'Deciduous Forest': 'Forest',
-  'Fallow/Idle Cropland': 'Fallow',
   'Other Hay/Non Alfalfa': 'Hay',
+  'Fallow/Idle Cropland': 'Fallow',
+  'Clover/Wildflowers': 'Clover',
+  'Sod/Grass Seed': 'Sod',
+  'Developed/Open Space': 'Built-up',
+  'Developed/Low Intensity': 'Built-up',
+  'Developed/Med Intensity': 'Built-up',
+  'Developed/High Intensity': 'Built-up',
+  'Deciduous Forest': 'Forest',
+  'Evergreen Forest': 'Forest',
+  'Mixed Forest': 'Forest',
+  'Woody Wetlands': 'Wetland',
+  'Herbaceous Wetlands': 'Wetland',
+  'Open Water': 'Water',
+  'Nonag/Undefined': 'Not farmed',
+  'Clouds/No Data': 'No data',
 }
 
 function hasWheat(category: string | null | undefined) {
   return category === 'Winter Wheat' || category === 'Dbl Crop WinWht/Soybeans'
+}
+
+// True if the crop map has a record for this point but never corn, soybeans
+// or wheat: a town, a wood, a pasture, or a field of something else.
+function noFieldCrops(years: CropYear[]) {
+  const recorded = years.filter((row) => row.category !== null)
+  return recorded.length > 0 && !recorded.some((row) => row.category! in CATEGORY_ICONS)
 }
 
 // ---------- Picking a field ----------
@@ -326,7 +348,15 @@ function FieldSummary({ lat, lon }: { lat: number; lon: number }) {
   const field = useField()
   const { search } = useLocation()
   const { data, error, loading } = useApi<FieldResponse>(`/api/field?lat=${lat}&lon=${lon}`)
-  const rotation = field.rotation ?? data?.rotation_guess ?? null
+  const guess = data?.rotation_guess ?? null
+  const { rotation: chosen, setRotation } = field
+  const rotation = chosen ?? guess
+
+  // Until the farmer picks a rotation, put the crop map's guess in the page
+  // address, so Compare and the other pages start from the same rotation.
+  useEffect(() => {
+    if (chosen === null && guess !== null) setRotation(guess)
+  }, [chosen, guess, setRotation])
 
   return (
     <>
@@ -338,6 +368,13 @@ function FieldSummary({ lat, lon }: { lat: number; lon: number }) {
           <div className="stack-small">
             <p>What the USDA crop map recorded on your field each year, from satellite imagery.</p>
             <CropHistory years={data.crop_history.years} />
+            {noFieldCrops(data.crop_history.years) && (
+              <p className="notice">
+                The crop map shows no corn, soybeans or wheat at this point since {data.crop_history.years[0].year},
+                so it may not be a crop field. Groundwork's rotations are built around those crops. If you meant
+                to pick a field, choose another point.
+              </p>
+            )}
             <RotationChoice guess={data.rotation_guess} chosen={field.rotation} onChoose={field.setRotation} />
             <p className="muted">
               {data.crop_history.source}, {data.crop_history.resolution}. The crop map can be wrong in some

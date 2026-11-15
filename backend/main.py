@@ -27,7 +27,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/api/health")
+# HEAD as well as GET, because uptime monitors and link checkers often use HEAD.
+@app.api_route("/api/health", methods=["GET", "HEAD"])
 def health():
     return {
         "status": "ok",
@@ -167,7 +168,7 @@ FRONTEND_DIST = (Path(__file__).parent.parent / "frontend" / "dist").resolve()
 
 if FRONTEND_DIST.exists():
 
-    @app.get("/{path:path}", include_in_schema=False)
+    @app.api_route("/{path:path}", methods=["GET", "HEAD"], include_in_schema=False)
     def frontend(path: str):
         """A built file if one matches, otherwise the app page.
 

@@ -10,7 +10,7 @@ Built for the [NASA Space Apps Challenge 2026](https://www.spaceappschallenge.or
 
 ## The problem
 
-Most Ohio cropland grows corn and soybeans. After the fall harvest there is no living crop until late spring, so the field sits bare through the wettest part of the year. That is when soil washes away and nitrate drains into streams and, eventually, Lake Erie and the Gulf of Mexico.
+Most Ohio cropland grows corn and soybeans. After the fall harvest there is no living crop until late spring, so the field sits bare for about eight months of the year, including April and May, which are among the wettest. That is when soil washes away and nitrate drains into streams and, eventually, Lake Erie and the Gulf of Mexico.
 
 Adding winter wheat or a cover crop keeps the soil covered, but it costs the farm time, money and sometimes corn yield. A farmer weighing that change needs to see both sides for their own field, not an average one.
 

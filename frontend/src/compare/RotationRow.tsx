@@ -72,7 +72,8 @@ function RotationRow({
             const hot = hotYears(data, cropId)
             return (
               <p key={cropId} className="rot-row__exposure">
-                {CROP_NAMES[cropId]} is in its sensitive weeks ({formatMonthDay(period.start)} to {formatMonthDay(period.end)})
+                {CROP_NAMES[cropId]} {cropId === 'soybean' ? 'are in their' : 'is in its'} sensitive weeks (
+                {formatMonthDay(period.start)} to {formatMonthDay(period.end)})
                 {' '}1 year in {exposure.years_in_rotation}.
                 {period.hot_day_threshold_c !== undefined &&
                   ` Here those weeks reached ${formatTemperature(period.hot_day_threshold_c)} in ${hot.hot} of ${hot.total} years.`}

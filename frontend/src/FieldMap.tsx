@@ -41,7 +41,15 @@ function FieldMap({
       scrollWheelZoom={false}
     >
       <LayersControl position="topright">
-        <LayersControl.BaseLayer checked name="Satellite (USGS)">
+        {/* Place and road names help people find their way to the field. */}
+        <LayersControl.BaseLayer checked name="Satellite with place names (USGS)">
+          <TileLayer
+            url="https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}"
+            attribution='Imagery: <a href="https://www.usgs.gov/programs/national-geospatial-program/national-map">USGS The National Map</a>'
+            maxZoom={16}
+          />
+        </LayersControl.BaseLayer>
+        <LayersControl.BaseLayer name="Satellite only (USGS)">
           <TileLayer
             url="https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}"
             attribution='Imagery: <a href="https://www.usgs.gov/programs/national-geospatial-program/national-map">USGS The National Map</a>'
