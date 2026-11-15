@@ -1,12 +1,106 @@
-/* Rotation comparison. Only the styles this section needs. */
+/* ---------- Page frame: header, navbar, footer ---------- */
 
-.comparison {
-  --ink-secondary: #52514e;
-  --hairline: #e1e0d9;
-  --covered: #008300;
-  --uncovered: #e1e0d9;
-  --rain: #2a78d6;
-  --rain-track: #d9e7f8;
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 48px;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 28px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green);
+  text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  gap: 4px;
+}
+
+.site-nav a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  background: var(--surface);
+}
+
+.site-nav a.active {
+  background: var(--ink);
+  color: #ffffff;
+}
+
+.site-footer {
+  margin-top: 56px;
+  padding-top: 16px;
+  border-top: 2px solid var(--border);
+  color: var(--ink-secondary);
+  font-size: 0.85rem;
+}
+
+/* On a phone the navbar becomes a bar of icons fixed to the bottom. */
+@media (max-width: 720px) {
+  .page {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .site-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
+    border-top: 2px solid var(--border);
+    background: #ffffff;
+  }
+
+  .site-nav a {
+    flex-direction: column;
+    gap: 2px;
+    min-height: 56px;
+    padding: 6px 4px;
+    font-size: 0.75rem;
+    text-align: center;
+  }
+}
+
+/* ---------- Shared building blocks ---------- */
+
+.stack > * + * {
+  margin-top: 24px;
+}
+
+.lede {
+  max-width: 68ch;
+  font-size: 1.1rem;
+  color: var(--ink-secondary);
 }
 
 .muted {
@@ -14,14 +108,68 @@
   font-size: 0.875rem;
 }
 
+.panel {
+  padding: 20px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+
+.panel h2 {
+  margin-top: 0;
+}
+
+.spaced-list li + li {
+  margin-top: 8px;
+}
+
+.icon-row {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.crop-icon {
+  flex: none;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 2px solid var(--border-strong);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button--primary {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #ffffff;
+}
+
+/* ---------- Compare page ---------- */
+
 /* Three cards side by side on a wide screen, stacked on a narrow one. */
 .rotation-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
+  margin-top: 16px;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 960px) {
   .rotation-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -32,10 +180,11 @@
   display: grid;
   grid-template-rows: subgrid;
   grid-row: span 7;
-  row-gap: 20px;
-  padding: 16px;
-  border: 1px solid var(--hairline);
-  border-radius: 8px;
+  row-gap: 22px;
+  padding: 20px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: #ffffff;
 }
 
 .rotation-card h3,
@@ -45,16 +194,21 @@
   margin: 0;
 }
 
+.rotation-card h3 {
+  margin-top: 6px;
+  font-size: 1.25rem;
+}
+
 .rotation-card h4 {
   margin-bottom: 8px;
 }
 
 .rotation-card ul {
-  padding-left: 18px;
+  padding-left: 20px;
 }
 
 .rotation-card li + li {
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 /* Ground-cover calendar: 12 cells per year. */
@@ -65,17 +219,20 @@
 }
 
 .month-strip span {
-  height: 18px;
-  border-radius: 2px;
-  background: var(--uncovered);
+  height: 22px;
+  border: 1px solid var(--soil-edge);
+  border-radius: 3px;
+  background: var(--soil);
 }
 
 .month-strip .covered {
-  background: var(--covered);
+  border-color: var(--green);
+  background: var(--green);
 }
 
 .month-letters span {
   height: auto;
+  border: 0;
   background: none;
   text-align: center;
   font-size: 0.75rem;
@@ -83,65 +240,118 @@
 }
 
 .year-row {
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  font-size: 0.875rem;
+  gap: 18px;
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
 }
 
 .swatch {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   margin-right: 6px;
-  border-radius: 2px;
-  background: var(--uncovered);
+  vertical-align: -3px;
+  border: 1px solid var(--soil-edge);
+  border-radius: 3px;
+  background: var(--soil);
 }
 
 .swatch.covered {
-  background: var(--covered);
+  border-color: var(--green);
+  background: var(--green);
 }
 
-/* Precipitation figure. */
+/* Bare-soil rain figure. */
 .stat-value {
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 1.1;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .meter {
-  height: 8px;
-  margin: 8px 0;
-  border-radius: 4px;
-  background: var(--rain-track);
+  height: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  background: var(--rain-light);
   overflow: hidden;
 }
 
 .meter div {
   height: 100%;
-  border-radius: 4px;
+  border-radius: 5px;
   background: var(--rain);
 }
 
 /* Benefit / Cost / No clear change label in front of a fact. */
 .tag {
   margin-right: 6px;
-  padding: 1px 5px;
-  border: 1px solid var(--hairline);
+  padding: 1px 6px;
+  border: 1px solid var(--border-strong);
   border-radius: 4px;
   color: var(--ink-secondary);
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-/* Sensitive-period charts: two charts side by side on a wide screen. */
+/* Priority buttons and the tile-drain question. */
+.priorities {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 8px;
+}
+
+.priorities > span:first-child,
+.priorities label {
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.priorities button,
+.priorities select {
+  min-height: 48px;
+  padding: 8px 14px;
+  border: 2px solid var(--border-strong);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.priorities button[aria-pressed='true'] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* A fact that does not relate to the chosen priority. */
+.dimmed {
+  opacity: 0.35;
+}
+
+.tile-note {
+  display: block;
+  margin-top: 4px;
+  padding-left: 8px;
+  border-left: 3px solid var(--border-strong);
+  color: var(--ink-secondary);
+  font-size: 0.85rem;
+}
+
+/* ---------- Weather page ---------- */
+
 .period {
   margin-top: 24px;
 }
@@ -161,57 +371,4 @@
 .period-charts h4,
 .period-charts p {
   margin: 0 0 4px;
-}
-
-/* Priority buttons above the cards. */
-.priorities {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin: 16px 0 8px;
-}
-
-.priorities button {
-  padding: 6px 12px;
-  border: 1px solid #c3c2b7;
-  border-radius: 16px;
-  background: #ffffff;
-  color: #0b0b0b;
-  font: inherit;
-  cursor: pointer;
-}
-
-.priorities button[aria-pressed='true'] {
-  border-color: #0b0b0b;
-  background: #0b0b0b;
-  color: #ffffff;
-}
-
-/* A fact that does not relate to the chosen priority. */
-.dimmed {
-  opacity: 0.35;
-}
-
-/* Cards sit on a white surface above the page background. */
-.rotation-card {
-  background: #ffffff;
-}
-
-/* Tile-drain question and the note it adds to nitrate facts. */
-.priorities select {
-  padding: 6px 8px;
-  border: 1px solid #c3c2b7;
-  border-radius: 6px;
-  background: #ffffff;
-  font: inherit;
-}
-
-.tile-note {
-  display: block;
-  margin-top: 4px;
-  padding-left: 8px;
-  border-left: 3px solid #c3c2b7;
-  color: var(--ink-secondary);
-  font-size: 0.85rem;
 }

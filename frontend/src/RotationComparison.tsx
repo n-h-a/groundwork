@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react'
-import type { ReactNode } from 'react'
+import { useState } from 'react'
+import CropIcon from './CropIcon'
+import { CROP_ICON } from './icons'
 import type { CompareResponse, Fact, Rotation, Source } from './compareTypes'
-import SensitivePeriodCharts from './SensitivePeriodCharts'
+import { useField } from './field'
+import type { TileDrained } from './field'
 import { formatPrecipitation } from './units'
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -43,9 +45,6 @@ const PRIORITIES: { id: Priority; label: string }[] = [
   { id: 'soil', label: 'Soil health' },
   { id: 'water', label: 'Water downstream' },
 ]
-
-// The farmer's answer to "Is your field tile-drained?"
-type TileDrained = 'yes' | 'no' | 'unsure'
 
 const TILE_NOTES: Record<TileDrained, string | null> = {
   yes: null,
@@ -149,9 +148,18 @@ function RotationCard({
   priority: Priority
   tileDrained: TileDrained
 }) {
+  // Each crop in the rotation once, always in the same order across cards.
+  const grown = new Set(rotation.years.flatMap((year) => year.crops))
+  const crops = Object.keys(CROP_ICON).filter((crop) => grown.has(crop))
+
   return (
     <article className="rotation-card">
       <div>
+        <div className="icon-row" aria-hidden="true">
+          {crops.map((crop) => (
+            <CropIcon key={crop} name={CROP_ICON[crop]} size={30} decorative />
+          ))}
+        </div>
         <h3>{rotation.name}</h3>
         <p className="muted">{rotation.description}</p>
       </div>
@@ -199,29 +207,13 @@ function RotationCard({
   )
 }
 
-// "children" is shown between the charts and the "How to read this" list.
-function RotationComparison({ children }: { children?: ReactNode }) {
-  const [data, setData] = useState<CompareResponse | null>(null)
-  const [error, setError] = useState(false)
+function RotationComparison({ data, placeName }: { data: CompareResponse; placeName: string }) {
   const [priority, setPriority] = useState<Priority>('all')
-  const [tileDrained, setTileDrained] = useState<TileDrained>('unsure')
-
-  useEffect(() => {
-    fetch('/api/compare')
-      .then((res) => {
-        if (!res.ok) throw new Error('Request failed')
-        return res.json()
-      })
-      .then((json: CompareResponse) => setData(json))
-      .catch(() => setError(true))
-  }, [])
-
-  if (error) return <p>Could not load the rotation comparison.</p>
-  if (!data) return <p>Loading the rotation comparison...</p>
+  const { tile: tileDrained, setTile: setTileDrained } = useField()
 
   return (
     <section className="comparison">
-      <h2>Compare rotations for the {data.location.name} area</h2>
+      <h1>Compare rotations for {placeName}</h1>
       <p>
         Three ways to rotate crops on the same field, each shown with what it means for the farm and for the
         land and water around it. These are comparisons to explore, not recommendations.
@@ -280,40 +272,6 @@ function RotationComparison({ children }: { children?: ReactNode }) {
         ))}
       </div>
 
-      <SensitivePeriodCharts periods={data.sensitive_periods} />
-
-      {children}
-
-      {/* DRAFT TEXT: rewrite this list in your own words. */}
-      <h2>How to read this, and its limits</h2>
-      <ul>
-        <li>A month counts as covered only if a living crop is growing for the whole month.</li>
-        <li>
-          Soil: the only soil input is the tile-drain question. Soil type, slope and drainage class are not
-          included yet.
-        </li>
-        <li>
-          The precipitation figure shows exposure: how much rain and snow falls while nothing is growing. It is
-          not a measurement of runoff or nutrient loss.
-        </li>
-        <li>
-          Climate data: {data.climate_source}. It describes an area about 50 km across, not a single field.
-        </li>
-        <li>Crop facts come from the sources below. Most are from trials at a small number of sites.</li>
-        <li>This tool supports your own judgment and local advice. It does not replace them.</li>
-      </ul>
-
-      <h2>Sources</h2>
-      <ol>
-        {data.sources.map((source) => (
-          <li key={source.id}>
-            <a href={source.url} target="_blank" rel="noreferrer">
-              {source.title}
-            </a>
-            . {source.publisher}.{source.note && <span className="muted"> {source.note}</span>}
-          </li>
-        ))}
-      </ol>
     </section>
   )
 }
