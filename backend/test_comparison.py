@@ -158,6 +158,18 @@ class RotationsFileTest(unittest.TestCase):
                 for source_id in fact["sources"]:
                     self.assertIn(source_id, source_ids)
 
+    def test_every_fact_has_a_known_topic(self):
+        for rotation in self.data["rotations"]:
+            facts = (
+                rotation["for_the_farm"]
+                + rotation["for_the_environment"]
+                + rotation["risks_needing_local_review"]
+            )
+            for fact in facts:
+                self.assertTrue(fact["topics"], fact["fact"])
+                for topic in fact["topics"]:
+                    self.assertIn(topic, ["income", "soil", "water"])
+
     def test_more_ground_cover_means_less_uncovered_precipitation(self):
         result = compare(self.data, steady_weather([2001, 2002]))
         shares = [

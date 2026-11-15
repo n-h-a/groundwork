@@ -3,7 +3,8 @@
     "what": "Facts about three crop rotations for the Dayton, Ohio area, each tied to a source.",
     "compiled_with": "Extracted from the listed sources with help from an AI assistant (Claude). Check each fact against its source before relying on it.",
     "covered_months": "Month numbers (1-12) in which a living crop is growing for the whole month. Planting and harvest months are not counted.",
-    "site_year": "One research site in one year. 'Five of eight site-years' means five of eight trials."
+    "site_year": "One research site in one year. 'Five of eight site-years' means five of eight trials.",
+    "topics": "Which farmer priority a fact relates to: income, soil or water. These labels are our own judgment, not taken from the sources. The page uses them to highlight facts."
   },
 
   "sources": [
@@ -115,16 +116,19 @@
       "for_the_farm": [
         {
           "effect": "benefit",
+          "topics": ["income"],
           "fact": "In an Ohio trial, corn after soybeans out-yielded corn after wheat in five of eight site-years. In those five, corn after wheat yielded 8 to 36% less, 17% on average.",
           "sources": ["huo-2022"]
         },
         {
           "effect": "benefit",
+          "topics": ["income"],
           "fact": "Corn and soybeans usually pay better than wheat. The paper notes that wheat is often less profitable than soybeans in Ohio.",
           "sources": ["huo-2022"]
         },
         {
           "effect": "cost",
+          "topics": ["soil"],
           "fact": "Soil organic matter was lower than in the wheat rotation at both sites by 2019: 4.84% against 5.20%, and 4.82% against 5.46%.",
           "sources": ["huo-2022"]
         }
@@ -132,17 +136,20 @@
       "for_the_environment": [
         {
           "effect": "cost",
+          "topics": ["water", "soil"],
           "fact": "No living crop is on the field from the fall harvest until planting in mid to late May, in both years.",
           "sources": ["huo-2022"]
         },
         {
           "effect": "cost",
+          "topics": ["water"],
           "fact": "January to June are the months when most nitrate is lost through tile drains. Monitored Ohio fields with no crop growing from November to April lost about twice as much nitrate as fields with one.",
           "sources": ["osu-cover-2021"]
         }
       ],
       "risks_needing_local_review": [
         {
+          "topics": ["income", "soil"],
           "fact": "The trial was no-till at two research stations. Results on other soils or with tillage may differ.",
           "sources": ["huo-2022"]
         }
@@ -164,26 +171,31 @@
       "for_the_farm": [
         {
           "effect": "benefit",
+          "topics": ["soil"],
           "fact": "Soil organic matter was higher than in corn-soybean at both sites by 2019, after two full cycles: 5.20% against 4.84%, and 5.46% against 4.82%.",
           "sources": ["huo-2022"]
         },
         {
           "effect": "benefit",
+          "topics": ["income"],
           "fact": "Soybeans yielded more in two of eight site-years: 62 against 49 bushels per acre, and 74 against 70. In the other six there was no significant difference.",
           "sources": ["huo-2022"]
         },
         {
           "effect": "cost",
+          "topics": ["income"],
           "fact": "Corn yielded less in five of eight site-years, 17% less on average. The authors think the likely cause was cooler, wetter soil under no-till with wheat straw left on the field.",
           "sources": ["huo-2022"]
         },
         {
           "effect": "cost",
+          "topics": ["income"],
           "fact": "Wheat is often less profitable than soybeans in Ohio.",
           "sources": ["huo-2022"]
         },
         {
           "effect": "cost",
+          "topics": ["income"],
           "fact": "Heavy rain cut wheat yields in two of eight site-years, to 39 and 29 bushels per acre. In the other six, wheat yielded 57 to 91.",
           "sources": ["huo-2022"]
         }
@@ -191,31 +203,37 @@
       "for_the_environment": [
         {
           "effect": "benefit",
+          "topics": ["water", "soil"],
           "fact": "Living wheat is on the field from November to June in one winter out of three.",
           "sources": ["huo-2022"]
         },
         {
           "effect": "benefit",
+          "topics": ["water"],
           "fact": "Monitored Ohio fields with a crop growing from November to April lost about half as much nitrate through tile drains, roughly 18 pounds per acre a year less. Wheat counted as a growing crop in that study.",
           "sources": ["osu-cover-2021"]
         },
         {
           "effect": "neutral",
+          "topics": ["water"],
           "fact": "Phosphorus losses did not change significantly: they went up in tile drainage and down in surface runoff.",
           "sources": ["osu-cover-2021"]
         },
         {
           "effect": "cost",
+          "topics": ["water", "soil"],
           "fact": "After the wheat harvest in early July, no living crop is on the field until corn is planted the next May.",
           "sources": ["huo-2022"]
         }
       ],
       "risks_needing_local_review": [
         {
+          "topics": ["income"],
           "fact": "The corn yield loss may depend on no-till and on leaving wheat straw. The authors suggest strip tillage, straw removal or red clover might avoid it, but did not test them.",
           "sources": ["huo-2022"]
         },
         {
+          "topics": ["income"],
           "fact": "Whether wheat pays depends on local prices and markets.",
           "sources": ["huo-2022"]
         }
@@ -240,21 +258,25 @@
       "for_the_farm": [
         {
           "effect": "benefit",
+          "topics": ["income", "soil"],
           "fact": "Overwintered red clover in Ohio supplied about 75 pounds of nitrogen per acre by May 15, which reduces the fertilizer the following corn needs.",
           "sources": ["sare-red-clover"]
         },
         {
           "effect": "benefit",
+          "topics": ["income"],
           "fact": "In a Wisconsin study, corn after red clover yielded the same as corn given 160 pounds of nitrogen fertilizer per acre.",
           "sources": ["sare-red-clover"]
         },
         {
           "effect": "cost",
+          "topics": ["income"],
           "fact": "Clover seed, at 10 to 12 pounds per acre, plus the work of seeding it and killing it completely before the next crop.",
           "sources": ["sare-red-clover"]
         },
         {
           "effect": "cost",
+          "topics": ["income"],
           "fact": "The costs of adding wheat still apply: in the Ohio trial corn yielded less after wheat in five of eight site-years, and wheat is often less profitable than soybeans.",
           "sources": ["huo-2022"]
         }
@@ -262,26 +284,31 @@
       "for_the_environment": [
         {
           "effect": "benefit",
+          "topics": ["water", "soil"],
           "fact": "A living crop is on the field in two winters out of three, and continuously from the fall wheat planting until the clover is killed about 17 months later.",
           "sources": ["huo-2022", "sare-red-clover"]
         },
         {
           "effect": "benefit",
+          "topics": ["water"],
           "fact": "Monitored Ohio fields with a crop growing from November to April lost about half as much nitrate through tile drains, roughly 18 pounds per acre a year less. Clover and wheat were among the crops in that study.",
           "sources": ["osu-cover-2021"]
         },
         {
           "effect": "neutral",
+          "topics": ["water"],
           "fact": "Phosphorus losses did not change significantly: they went up in tile drainage and down in surface runoff.",
           "sources": ["osu-cover-2021"]
         }
       ],
       "risks_needing_local_review": [
         {
+          "topics": ["income"],
           "fact": "If the clover establishes poorly or dies over winter, weeds can take over.",
           "sources": ["sare-red-clover"]
         },
         {
+          "topics": ["income"],
           "fact": "Clover that is not killed completely can carry over into soybeans, where it is hard to control and can transmit bud blight.",
           "sources": ["sare-red-clover"]
         }
