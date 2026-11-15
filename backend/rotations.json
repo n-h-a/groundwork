@@ -1,0 +1,295 @@
+{
+  "_about": {
+    "what": "Facts about three crop rotations for the Dayton, Ohio area, each tied to a source.",
+    "compiled_with": "Extracted from the listed sources with help from an AI assistant (Claude). Check each fact against its source before relying on it.",
+    "covered_months": "Month numbers (1-12) in which a living crop is growing for the whole month. Planting and harvest months are not counted.",
+    "site_year": "One research site in one year. 'Five of eight site-years' means five of eight trials."
+  },
+
+  "sources": [
+    {
+      "id": "huo-2022",
+      "title": "Yield and soil responses to adding wheat to a corn-soybean rotation",
+      "publisher": "Huo, Frey, Lindsey, Benitez. Crop, Forage & Turfgrass Management, 2022",
+      "url": "https://acsess.onlinelibrary.wiley.com/doi/10.1002/cft2.20143",
+      "note": "Ohio trial since 2012 at two research stations, no-till, wheat straw left on the field. One station is near South Charleston, about 45 km east of Dayton."
+    },
+    {
+      "id": "ocj-2020",
+      "title": "Benefits of incorporating wheat in a three-crop rotation",
+      "publisher": "Ohio's Country Journal, 2020",
+      "url": "https://ocj.com/2020/06/benefits-of-incorporating-wheat-in-a-three-crop-rotation/",
+      "note": "News article about the same Ohio State trial as huo-2022. Not an independent study."
+    },
+    {
+      "id": "osu-cover-2021",
+      "title": "How do cover crops impact field nitrogen and phosphorous losses?",
+      "publisher": "Ohio State University C.O.R.N. Newsletter, 2021",
+      "url": "https://agcrops.osu.edu/newsletter/corn-newsletter/24-2021/how-do-cover-crops-impact-field-nitrogen-and-phosphorous-losses",
+      "note": "Monitored Ohio farm fields, water years 2012-2019. A field counted as cover cropped if a crop was growing from November to April. Species were pooled and included wheat and clover."
+    },
+    {
+      "id": "purdue-corn-07",
+      "title": "Drought and Heat Stress Effects on Corn Pollination",
+      "publisher": "Purdue University, R.L. Nielsen",
+      "url": "https://www.agry.purdue.edu/ext/corn/pubs/corn-07.htm",
+      "note": "Written for Indiana. Gives no underlying study for its per-day yield figures."
+    },
+    {
+      "id": "unl-g1367",
+      "title": "Irrigating Soybean (G1367)",
+      "publisher": "University of Nebraska-Lincoln Extension",
+      "url": "https://extensionpubs.unl.edu/publication/g1367/na/html/view",
+      "note": "An irrigation guide for Nebraska. Used only for which growth stages are sensitive to water stress."
+    },
+    {
+      "id": "nass-crop-progress-2026",
+      "title": "Crop Progress, reports released July 20, July 27, August 3 and August 10, 2026",
+      "publisher": "USDA National Agricultural Statistics Service",
+      "url": "https://esmis.nal.usda.gov/sites/default/release-files/795995/prog3026.pdf",
+      "note": "Ohio rows, 2021-2025 average column. Statewide figures, not specific to Dayton."
+    },
+    {
+      "id": "sare-red-clover",
+      "title": "Managing Cover Crops Profitably, 3rd edition: Red Clover",
+      "publisher": "Sustainable Agriculture Research and Education (SARE), 2007",
+      "url": "https://www.sare.org/publications/managing-cover-crops-profitably/legume-cover-crops/red-clover/",
+      "note": "A national handbook. Includes some Ohio figures."
+    }
+  ],
+
+  "crops": {
+    "corn": {
+      "planted": "Mid to late May",
+      "harvested": "Early October to early November",
+      "calendar_sources": ["huo-2022"],
+      "sensitive_period": {
+        "start": "07-08",
+        "end": "08-05",
+        "description": "From two weeks before silking to two weeks after. Severe drought stress can cut yield by 3 to 4% per day before silking, up to 8% per day during silking, and up to 6% per day in the two weeks after.",
+        "how_dated": "On average 38% of Ohio's corn was silking by July 19 and 63% by July 26 (2021-2025), so about half by July 22. The window is two weeks either side of that date.",
+        "caveats": "Heat damage almost always comes together with drought. The dates are a statewide average and shift with planting date.",
+        "sources": ["purdue-corn-07", "nass-crop-progress-2026"]
+      }
+    },
+    "soybean": {
+      "planted": "Mid to late May",
+      "harvested": "Early October to early November",
+      "calendar_sources": ["huo-2022"],
+      "sensitive_period": {
+        "start": "08-01",
+        "end": "08-31",
+        "description": "Pod development and seed fill are the stages when a water shortage costs the most yield.",
+        "how_dated": "On average 34% of Ohio's soybeans were setting pods by July 26 and 52% by August 2 (2021-2025), so about half by August 1.",
+        "caveats": "Seed fill continues into September, but we have no sourced end date, so this window covers August only.",
+        "sources": ["unl-g1367", "nass-crop-progress-2026"]
+      }
+    },
+    "winter_wheat": {
+      "planted": "Late September to mid October",
+      "harvested": "Early July",
+      "calendar_sources": ["huo-2022", "nass-crop-progress-2026"],
+      "sensitive_period": null,
+      "sensitive_period_note": "None of our sources covers when wheat is sensitive to heat or dry weather. In the Ohio trial, heavy rain cut wheat yields in two site-years."
+    },
+    "red_clover": {
+      "planted": "Late winter, broadcast into the dormant wheat (frost seeding)",
+      "harvested": "Not harvested. Killed in spring before corn is planted.",
+      "calendar_sources": ["sare-red-clover"],
+      "sensitive_period": null,
+      "sensitive_period_note": "Not applicable: it is grown to cover the soil, not for yield."
+    }
+  },
+
+  "rotations": [
+    {
+      "id": "corn-soybean",
+      "name": "Corn, soybean",
+      "description": "The existing rotation: the baseline the other two are compared against.",
+      "years": [
+        { "label": "Year 1: corn", "crops": ["corn"], "covered_months": [6, 7, 8, 9] },
+        { "label": "Year 2: soybeans", "crops": ["soybean"], "covered_months": [6, 7, 8, 9] }
+      ],
+      "for_the_farm": [
+        {
+          "effect": "benefit",
+          "fact": "In an Ohio trial, corn after soybeans out-yielded corn after wheat in five of eight site-years. In those five, corn after wheat yielded 8 to 36% less, 17% on average.",
+          "sources": ["huo-2022"]
+        },
+        {
+          "effect": "benefit",
+          "fact": "Corn and soybeans usually pay better than wheat. The paper notes that wheat is often less profitable than soybeans in Ohio.",
+          "sources": ["huo-2022"]
+        },
+        {
+          "effect": "cost",
+          "fact": "Soil organic matter was lower than in the wheat rotation at both sites by 2019: 4.84% against 5.20%, and 4.82% against 5.46%.",
+          "sources": ["huo-2022"]
+        }
+      ],
+      "for_the_environment": [
+        {
+          "effect": "cost",
+          "fact": "No living crop is on the field from the fall harvest until planting in mid to late May, in both years.",
+          "sources": ["huo-2022"]
+        },
+        {
+          "effect": "cost",
+          "fact": "January to June are the months when most nitrate is lost through tile drains. Monitored Ohio fields with no crop growing from November to April lost about twice as much nitrate as fields with one.",
+          "sources": ["osu-cover-2021"]
+        }
+      ],
+      "risks_needing_local_review": [
+        {
+          "fact": "The trial was no-till at two research stations. Results on other soils or with tillage may differ.",
+          "sources": ["huo-2022"]
+        }
+      ],
+      "information_gaps": [
+        "Erosion was not measured in any of our sources.",
+        "None of our sources gives costs or profit in dollars."
+      ]
+    },
+    {
+      "id": "corn-soybean-wheat",
+      "name": "Corn, soybean, winter wheat",
+      "description": "Adds winter wheat as a third crop. After the wheat harvest the field has no living crop until corn is planted.",
+      "years": [
+        { "label": "Year 1: corn", "crops": ["corn"], "covered_months": [6, 7, 8, 9] },
+        { "label": "Year 2: soybeans, then wheat planted in fall", "crops": ["soybean", "winter_wheat"], "covered_months": [6, 7, 8, 9, 11, 12] },
+        { "label": "Year 3: wheat, harvested in early July", "crops": ["winter_wheat"], "covered_months": [1, 2, 3, 4, 5, 6] }
+      ],
+      "for_the_farm": [
+        {
+          "effect": "benefit",
+          "fact": "Soil organic matter was higher than in corn-soybean at both sites by 2019, after two full cycles: 5.20% against 4.84%, and 5.46% against 4.82%.",
+          "sources": ["huo-2022"]
+        },
+        {
+          "effect": "benefit",
+          "fact": "Soybeans yielded more in two of eight site-years: 62 against 49 bushels per acre, and 74 against 70. In the other six there was no significant difference.",
+          "sources": ["huo-2022"]
+        },
+        {
+          "effect": "cost",
+          "fact": "Corn yielded less in five of eight site-years, 17% less on average. The authors think the likely cause was cooler, wetter soil under no-till with wheat straw left on the field.",
+          "sources": ["huo-2022"]
+        },
+        {
+          "effect": "cost",
+          "fact": "Wheat is often less profitable than soybeans in Ohio.",
+          "sources": ["huo-2022"]
+        },
+        {
+          "effect": "cost",
+          "fact": "Heavy rain cut wheat yields in two of eight site-years, to 39 and 29 bushels per acre. In the other six, wheat yielded 57 to 91.",
+          "sources": ["huo-2022"]
+        }
+      ],
+      "for_the_environment": [
+        {
+          "effect": "benefit",
+          "fact": "Living wheat is on the field from November to June in one winter out of three.",
+          "sources": ["huo-2022"]
+        },
+        {
+          "effect": "benefit",
+          "fact": "Monitored Ohio fields with a crop growing from November to April lost about half as much nitrate through tile drains, roughly 18 pounds per acre a year less. Wheat counted as a growing crop in that study.",
+          "sources": ["osu-cover-2021"]
+        },
+        {
+          "effect": "neutral",
+          "fact": "Phosphorus losses did not change significantly: they went up in tile drainage and down in surface runoff.",
+          "sources": ["osu-cover-2021"]
+        },
+        {
+          "effect": "cost",
+          "fact": "After the wheat harvest in early July, no living crop is on the field until corn is planted the next May.",
+          "sources": ["huo-2022"]
+        }
+      ],
+      "risks_needing_local_review": [
+        {
+          "fact": "The corn yield loss may depend on no-till and on leaving wheat straw. The authors suggest strip tillage, straw removal or red clover might avoid it, but did not test them.",
+          "sources": ["huo-2022"]
+        },
+        {
+          "fact": "Whether wheat pays depends on local prices and markets.",
+          "sources": ["huo-2022"]
+        }
+      ],
+      "information_gaps": [
+        "The nitrate figure pools many cover species. It was not measured for wheat alone.",
+        "Less winter erosion with wheat was observed in the trial but not measured (ocj-2020).",
+        "Fewer soybean cyst nematodes are expected with wheat, but this was not measured (ocj-2020).",
+        "None of our sources covers when wheat is sensitive to heat or dry weather.",
+        "None of our sources gives costs or profit in dollars."
+      ]
+    },
+    {
+      "id": "corn-soybean-wheat-clover",
+      "name": "Corn, soybean, winter wheat with red clover",
+      "description": "Same as above, with red clover seeded into the wheat in late winter. The clover keeps growing after the wheat harvest and through the next winter, and is killed before corn is planted.",
+      "years": [
+        { "label": "Year 1: clover until spring, then corn", "crops": ["red_clover", "corn"], "covered_months": [1, 2, 3, 6, 7, 8, 9] },
+        { "label": "Year 2: soybeans, then wheat planted in fall", "crops": ["soybean", "winter_wheat"], "covered_months": [6, 7, 8, 9, 11, 12] },
+        { "label": "Year 3: wheat, then clover after the July harvest", "crops": ["winter_wheat", "red_clover"], "covered_months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
+      ],
+      "for_the_farm": [
+        {
+          "effect": "benefit",
+          "fact": "Overwintered red clover in Ohio supplied about 75 pounds of nitrogen per acre by May 15, which reduces the fertilizer the following corn needs.",
+          "sources": ["sare-red-clover"]
+        },
+        {
+          "effect": "benefit",
+          "fact": "In a Wisconsin study, corn after red clover yielded the same as corn given 160 pounds of nitrogen fertilizer per acre.",
+          "sources": ["sare-red-clover"]
+        },
+        {
+          "effect": "cost",
+          "fact": "Clover seed, at 10 to 12 pounds per acre, plus the work of seeding it and killing it completely before the next crop.",
+          "sources": ["sare-red-clover"]
+        },
+        {
+          "effect": "cost",
+          "fact": "The costs of adding wheat still apply: in the Ohio trial corn yielded less after wheat in five of eight site-years, and wheat is often less profitable than soybeans.",
+          "sources": ["huo-2022"]
+        }
+      ],
+      "for_the_environment": [
+        {
+          "effect": "benefit",
+          "fact": "A living crop is on the field in two winters out of three, and continuously from the fall wheat planting until the clover is killed about 17 months later.",
+          "sources": ["huo-2022", "sare-red-clover"]
+        },
+        {
+          "effect": "benefit",
+          "fact": "Monitored Ohio fields with a crop growing from November to April lost about half as much nitrate through tile drains, roughly 18 pounds per acre a year less. Clover and wheat were among the crops in that study.",
+          "sources": ["osu-cover-2021"]
+        },
+        {
+          "effect": "neutral",
+          "fact": "Phosphorus losses did not change significantly: they went up in tile drainage and down in surface runoff.",
+          "sources": ["osu-cover-2021"]
+        }
+      ],
+      "risks_needing_local_review": [
+        {
+          "fact": "If the clover establishes poorly or dies over winter, weeds can take over.",
+          "sources": ["sare-red-clover"]
+        },
+        {
+          "fact": "Clover that is not killed completely can carry over into soybeans, where it is hard to control and can transmit bud blight.",
+          "sources": ["sare-red-clover"]
+        }
+      ],
+      "information_gaps": [
+        "The Ohio trial did not test red clover. Its authors only recommend testing it, so the effect on corn yield after wheat is unknown here.",
+        "The red clover handbook dates from 2007.",
+        "When the clover is killed in spring varies by farm. We count January to March as covered.",
+        "None of our sources gives costs or profit in dollars."
+      ]
+    }
+  ]
+}
