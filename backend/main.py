@@ -1,6 +1,12 @@
+import json
+from pathlib import Path
+
 import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+
+from comparison import compare
+from nasa_power import END_YEAR, START_YEAR, get_daily_data
 
 app = FastAPI(title="Groundwork API")
 
@@ -26,6 +32,8 @@ LOCATION = {"name": "Dayton, OH", "latitude": 39.76, "longitude": -84.19}
 
 # NASA POWER monthly API: https://power.larc.nasa.gov/docs/services/api/temporal/monthly/
 POWER_MONTHLY_URL = "https://power.larc.nasa.gov/api/temporal/monthly/point"
+
+ROTATIONS_FILE = Path(__file__).parent / "rotations.json"
 
 
 @app.get("/api/climate")
@@ -59,3 +67,19 @@ def climate():
         "temperature": values["T2M"],
         "precipitation": values["PRECTOTCORR"],
     }
+
+
+@app.get("/api/compare")
+def compare_rotations():
+    """Compare the rotations in rotations.json using daily NASA POWER data."""
+    try:
+        daily = get_daily_data(LOCATION["latitude"], LOCATION["longitude"])
+    except httpx.HTTPError:
+        raise HTTPException(status_code=502, detail="Could not get data from NASA POWER")
+
+    rotation_data = json.loads(ROTATIONS_FILE.read_text())
+
+    result = compare(rotation_data, daily)
+    result["location"] = LOCATION
+    result["climate_source"] = f"NASA POWER daily API (MERRA-2), {START_YEAR}-{END_YEAR}"
+    return result

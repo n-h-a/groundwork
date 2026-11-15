@@ -66,6 +66,8 @@
       "sensitive_period": {
         "start": "07-08",
         "end": "08-05",
+        "hot_day_threshold_c": 35,
+        "hot_day_note": "Above 95 F (35 C), exposed silks can dry out and pollen is likely to be damaged.",
         "description": "From two weeks before silking to two weeks after. Severe drought stress can cut yield by 3 to 4% per day before silking, up to 8% per day during silking, and up to 6% per day in the two weeks after.",
         "how_dated": "On average 38% of Ohio's corn was silking by July 19 and 63% by July 26 (2021-2025), so about half by July 22. The window is two weeks either side of that date.",
         "caveats": "Heat damage almost always comes together with drought. The dates are a statewide average and shift with planting date.",
