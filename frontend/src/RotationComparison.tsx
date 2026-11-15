@@ -222,7 +222,6 @@ function RotationComparison({ children }: { children?: ReactNode }) {
   return (
     <section className="comparison">
       <h2>Compare rotations for the {data.location.name} area</h2>
-      {/* DRAFT TEXT: rewrite in your own words. */}
       <p>
         Three ways to rotate crops on the same field, each shown with what it means for the farm and for the
         land and water around it. These are comparisons to explore, not recommendations.

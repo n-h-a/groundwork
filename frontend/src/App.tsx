@@ -17,7 +17,6 @@ function App() {
     <div className="page">
       <header>
         <h1>Groundwork</h1>
-        {/* DRAFT TEXT: rewrite in your own words. */}
         <p className="lede">
           What you plant, and in what order, affects your farm and the land and water around it. Groundwork
           puts NASA climate data next to published crop research so you can compare rotations on both.
