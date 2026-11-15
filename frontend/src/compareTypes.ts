@@ -13,7 +13,10 @@ export type Source = {
 export type Fact = {
   effect?: 'benefit' | 'cost' | 'neutral'
   topics: string[] // 'income', 'soil' or 'water'
-  tile_drained_only?: boolean // true if the fact was measured in tile-drained fields
+  // How the fact is known, and whether the research fits the farmer's field.
+  strength: 'measured_ohio' | 'measured_other_state' | 'crop_calendar' | 'guidance'
+  conditions?: { tillage?: string; tile_drained?: boolean }
+  fit: { status: 'general' | 'fits' | 'unknown' | 'may_not_apply'; notes: string[] }
   fact: string
   sources: string[]
 }

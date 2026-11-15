@@ -5,16 +5,29 @@
     "covered_months": "Month numbers (1-12) in which a living crop is growing for the whole month. Planting and harvest months are not counted.",
     "spans_and_events": "Which crop covers which months, and the month each crop is planted, harvested or ended. From the planting and harvest dates in huo-2022 and the clover timing in sare-red-clover.",
     "site_year": "One research site in one year. 'Five of eight site-years' means five of eight trials.",
-    "topics": "Which farmer priority a fact relates to: income, soil or water. These labels are our own judgment, not taken from the sources. The page uses them to highlight facts."
+    "topics": "Which farmer priority a fact relates to: income, soil or water. These labels are our own judgment, not taken from the sources. The page uses them to highlight facts.",
+    "strength": "How the fact is known: measured_ohio (measured in Ohio field research), measured_other_state, crop_calendar (follows from the planting and harvest dates), or guidance (a judgement or recommendation by the source's authors). Assigned by us.",
+    "conditions": "The conditions a finding was measured under (tillage, tile drains). The app checks them against the farmer's answers. Site coordinates are from huo-2022, section 2.1."
   },
-
   "sources": [
     {
       "id": "huo-2022",
       "title": "Yield and soil responses to adding wheat to a corn-soybean rotation",
       "publisher": "Huo, Frey, Lindsey, Benitez. Crop, Forage & Turfgrass Management, 2022",
       "url": "https://acsess.onlinelibrary.wiley.com/doi/10.1002/cft2.20143",
-      "note": "Ohio trial since 2012 at two research stations, no-till, wheat straw left on the field. One station is near South Charleston, about 45 km east of Dayton."
+      "note": "Ohio trial since 2012 at two research stations, no-till, wheat straw left on the field. One station is near South Charleston, about 45 km east of Dayton.",
+      "sites": [
+        {
+          "name": "Western Agricultural Research Station, near South Charleston",
+          "latitude": 39.8605,
+          "longitude": -83.6773
+        },
+        {
+          "name": "Northwest Agricultural Research Station, near Custar",
+          "latitude": 41.2129,
+          "longitude": -83.7641
+        }
+      ]
     },
     {
       "id": "ocj-2020",
@@ -59,12 +72,13 @@
       "note": "A national handbook. Includes some Ohio figures."
     }
   ],
-
   "crops": {
     "corn": {
       "planted": "Mid to late May",
       "harvested": "Early October to early November",
-      "calendar_sources": ["huo-2022"],
+      "calendar_sources": [
+        "huo-2022"
+      ],
       "sensitive_period": {
         "start": "07-08",
         "end": "08-05",
@@ -73,87 +87,207 @@
         "description": "From two weeks before silking to two weeks after. Severe drought stress can cut yield by 3 to 4% per day before silking, up to 8% per day during silking, and up to 6% per day in the two weeks after.",
         "how_dated": "On average 38% of Ohio's corn was silking by July 19 and 63% by July 26 (2021-2025), so about half by July 22. The window is two weeks either side of that date.",
         "caveats": "Heat damage almost always comes together with drought. The dates are a statewide average and shift with planting date.",
-        "sources": ["purdue-corn-07", "nass-crop-progress-2026"]
+        "sources": [
+          "purdue-corn-07",
+          "nass-crop-progress-2026"
+        ]
       }
     },
     "soybean": {
       "planted": "Mid to late May",
       "harvested": "Early October to early November",
-      "calendar_sources": ["huo-2022"],
+      "calendar_sources": [
+        "huo-2022"
+      ],
       "sensitive_period": {
         "start": "08-01",
         "end": "08-31",
         "description": "Pod development and seed fill are the stages when a water shortage costs the most yield.",
         "how_dated": "On average 34% of Ohio's soybeans were setting pods by July 26 and 52% by August 2 (2021-2025), so about half by August 1.",
         "caveats": "Seed fill continues into September, but we have no sourced end date, so this window covers August only.",
-        "sources": ["unl-g1367", "nass-crop-progress-2026"]
+        "sources": [
+          "unl-g1367",
+          "nass-crop-progress-2026"
+        ]
       }
     },
     "winter_wheat": {
       "planted": "Late September to mid October",
       "harvested": "Early July",
-      "calendar_sources": ["huo-2022", "nass-crop-progress-2026"],
+      "calendar_sources": [
+        "huo-2022",
+        "nass-crop-progress-2026"
+      ],
       "sensitive_period": null,
       "sensitive_period_note": "None of our sources covers when wheat is sensitive to heat or dry weather. In the Ohio trial, heavy rain cut wheat yields in two site-years."
     },
     "red_clover": {
       "planted": "Late winter, broadcast into the dormant wheat (frost seeding)",
       "harvested": "Not harvested. Killed in spring before corn is planted.",
-      "calendar_sources": ["sare-red-clover"],
+      "calendar_sources": [
+        "sare-red-clover"
+      ],
       "sensitive_period": null,
       "sensitive_period_note": "Not applicable: it is grown to cover the soil, not for yield."
     }
   },
-
   "rotations": [
     {
       "id": "corn-soybean",
       "name": "Corn, soybean",
       "description": "The existing rotation: the baseline the other two are compared against.",
       "years": [
-        { "label": "Year 1: corn", "crops": ["corn"], "covered_months": [6, 7, 8, 9], "spans": [{ "crop": "corn", "months": [6, 7, 8, 9] }], "events": [{ "month": 5, "type": "plant", "crop": "corn" }, { "month": 10, "type": "harvest", "crop": "corn" }] },
-        { "label": "Year 2: soybeans", "crops": ["soybean"], "covered_months": [6, 7, 8, 9], "spans": [{ "crop": "soybean", "months": [6, 7, 8, 9] }], "events": [{ "month": 5, "type": "plant", "crop": "soybean" }, { "month": 10, "type": "harvest", "crop": "soybean" }] }
+        {
+          "label": "Year 1: corn",
+          "crops": [
+            "corn"
+          ],
+          "covered_months": [
+            6,
+            7,
+            8,
+            9
+          ],
+          "spans": [
+            {
+              "crop": "corn",
+              "months": [
+                6,
+                7,
+                8,
+                9
+              ]
+            }
+          ],
+          "events": [
+            {
+              "month": 5,
+              "type": "plant",
+              "crop": "corn"
+            },
+            {
+              "month": 10,
+              "type": "harvest",
+              "crop": "corn"
+            }
+          ]
+        },
+        {
+          "label": "Year 2: soybeans",
+          "crops": [
+            "soybean"
+          ],
+          "covered_months": [
+            6,
+            7,
+            8,
+            9
+          ],
+          "spans": [
+            {
+              "crop": "soybean",
+              "months": [
+                6,
+                7,
+                8,
+                9
+              ]
+            }
+          ],
+          "events": [
+            {
+              "month": 5,
+              "type": "plant",
+              "crop": "soybean"
+            },
+            {
+              "month": 10,
+              "type": "harvest",
+              "crop": "soybean"
+            }
+          ]
+        }
       ],
       "for_the_farm": [
         {
           "effect": "benefit",
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "In an Ohio trial, corn after soybeans out-yielded corn after wheat in five of eight site-years. In those five, corn after wheat yielded 8 to 36% less, 17% on average.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "measured_ohio",
+          "conditions": {
+            "tillage": "no-till"
+          }
         },
         {
           "effect": "benefit",
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "Corn and soybeans usually pay better than wheat. The paper notes that wheat is often less profitable than soybeans in Ohio.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "guidance"
         },
         {
           "effect": "cost",
-          "topics": ["soil"],
+          "topics": [
+            "soil"
+          ],
           "fact": "Soil organic matter was lower than in the wheat rotation at both sites by 2019: 4.84% against 5.20%, and 4.82% against 5.46%.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "measured_ohio",
+          "conditions": {
+            "tillage": "no-till"
+          }
         }
       ],
       "for_the_environment": [
         {
           "effect": "cost",
-          "topics": ["water", "soil"],
+          "topics": [
+            "water",
+            "soil"
+          ],
           "fact": "No living crop is on the field from the fall harvest until planting in mid to late May, in both years.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "crop_calendar"
         },
         {
           "effect": "cost",
-          "topics": ["water"],
-          "tile_drained_only": true,
+          "topics": [
+            "water"
+          ],
           "fact": "January to June are the months when most nitrate is lost through tile drains. Monitored Ohio fields with no crop growing from November to April lost about twice as much nitrate as fields with one.",
-          "sources": ["osu-cover-2021"]
+          "sources": [
+            "osu-cover-2021"
+          ],
+          "strength": "measured_ohio",
+          "conditions": {
+            "tile_drained": true
+          }
         }
       ],
       "risks_needing_local_review": [
         {
-          "topics": ["income", "soil"],
+          "topics": [
+            "income",
+            "soil"
+          ],
           "fact": "The trial was no-till at two research stations. Results on other soils or with tillage may differ.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "guidance"
         }
       ],
       "information_gaps": [
@@ -166,79 +300,269 @@
       "name": "Corn, soybean, winter wheat",
       "description": "Adds winter wheat as a third crop. After the wheat harvest the field has no living crop until corn is planted.",
       "years": [
-        { "label": "Year 1: corn", "crops": ["corn"], "covered_months": [6, 7, 8, 9], "spans": [{ "crop": "corn", "months": [6, 7, 8, 9] }], "events": [{ "month": 5, "type": "plant", "crop": "corn" }, { "month": 10, "type": "harvest", "crop": "corn" }] },
-        { "label": "Year 2: soybeans, then wheat planted in fall", "crops": ["soybean", "winter_wheat"], "covered_months": [6, 7, 8, 9, 11, 12], "spans": [{ "crop": "soybean", "months": [6, 7, 8, 9] }, { "crop": "winter_wheat", "months": [11, 12] }], "events": [{ "month": 5, "type": "plant", "crop": "soybean" }, { "month": 10, "type": "harvest", "crop": "soybean" }, { "month": 10, "type": "plant", "crop": "winter_wheat" }] },
-        { "label": "Year 3: wheat, harvested in early July", "crops": ["winter_wheat"], "covered_months": [1, 2, 3, 4, 5, 6], "spans": [{ "crop": "winter_wheat", "months": [1, 2, 3, 4, 5, 6] }], "events": [{ "month": 7, "type": "harvest", "crop": "winter_wheat" }] }
+        {
+          "label": "Year 1: corn",
+          "crops": [
+            "corn"
+          ],
+          "covered_months": [
+            6,
+            7,
+            8,
+            9
+          ],
+          "spans": [
+            {
+              "crop": "corn",
+              "months": [
+                6,
+                7,
+                8,
+                9
+              ]
+            }
+          ],
+          "events": [
+            {
+              "month": 5,
+              "type": "plant",
+              "crop": "corn"
+            },
+            {
+              "month": 10,
+              "type": "harvest",
+              "crop": "corn"
+            }
+          ]
+        },
+        {
+          "label": "Year 2: soybeans, then wheat planted in fall",
+          "crops": [
+            "soybean",
+            "winter_wheat"
+          ],
+          "covered_months": [
+            6,
+            7,
+            8,
+            9,
+            11,
+            12
+          ],
+          "spans": [
+            {
+              "crop": "soybean",
+              "months": [
+                6,
+                7,
+                8,
+                9
+              ]
+            },
+            {
+              "crop": "winter_wheat",
+              "months": [
+                11,
+                12
+              ]
+            }
+          ],
+          "events": [
+            {
+              "month": 5,
+              "type": "plant",
+              "crop": "soybean"
+            },
+            {
+              "month": 10,
+              "type": "harvest",
+              "crop": "soybean"
+            },
+            {
+              "month": 10,
+              "type": "plant",
+              "crop": "winter_wheat"
+            }
+          ]
+        },
+        {
+          "label": "Year 3: wheat, harvested in early July",
+          "crops": [
+            "winter_wheat"
+          ],
+          "covered_months": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "spans": [
+            {
+              "crop": "winter_wheat",
+              "months": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            }
+          ],
+          "events": [
+            {
+              "month": 7,
+              "type": "harvest",
+              "crop": "winter_wheat"
+            }
+          ]
+        }
       ],
       "for_the_farm": [
         {
           "effect": "benefit",
-          "topics": ["soil"],
+          "topics": [
+            "soil"
+          ],
           "fact": "Soil organic matter was higher than in corn-soybean at both sites by 2019, after two full cycles: 5.20% against 4.84%, and 5.46% against 4.82%.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "measured_ohio",
+          "conditions": {
+            "tillage": "no-till"
+          }
         },
         {
           "effect": "benefit",
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "Soybeans yielded more in two of eight site-years: 62 against 49 bushels per acre, and 74 against 70. In the other six there was no significant difference.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "measured_ohio",
+          "conditions": {
+            "tillage": "no-till"
+          }
         },
         {
           "effect": "cost",
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "Corn yielded less in five of eight site-years, 17% less on average. The authors think the likely cause was cooler, wetter soil under no-till with wheat straw left on the field.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "measured_ohio",
+          "conditions": {
+            "tillage": "no-till"
+          }
         },
         {
           "effect": "cost",
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "Wheat is often less profitable than soybeans in Ohio.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "guidance"
         },
         {
           "effect": "cost",
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "Heavy rain cut wheat yields in two of eight site-years, to 39 and 29 bushels per acre. In the other six, wheat yielded 57 to 91.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "measured_ohio",
+          "conditions": {
+            "tillage": "no-till"
+          }
         }
       ],
       "for_the_environment": [
         {
           "effect": "benefit",
-          "topics": ["water", "soil"],
+          "topics": [
+            "water",
+            "soil"
+          ],
           "fact": "Living wheat is on the field from November to June in one winter out of three.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "crop_calendar"
         },
         {
           "effect": "benefit",
-          "topics": ["water"],
-          "tile_drained_only": true,
+          "topics": [
+            "water"
+          ],
           "fact": "Monitored Ohio fields with a crop growing from November to April lost about half as much nitrate through tile drains, roughly 18 pounds per acre a year less. Wheat counted as a growing crop in that study.",
-          "sources": ["osu-cover-2021"]
+          "sources": [
+            "osu-cover-2021"
+          ],
+          "strength": "measured_ohio",
+          "conditions": {
+            "tile_drained": true
+          }
         },
         {
           "effect": "neutral",
-          "topics": ["water"],
+          "topics": [
+            "water"
+          ],
           "fact": "Phosphorus losses did not change significantly: they went up in tile drainage and down in surface runoff.",
-          "sources": ["osu-cover-2021"]
+          "sources": [
+            "osu-cover-2021"
+          ],
+          "strength": "measured_ohio",
+          "conditions": {
+            "tile_drained": true
+          }
         },
         {
           "effect": "cost",
-          "topics": ["water", "soil"],
+          "topics": [
+            "water",
+            "soil"
+          ],
           "fact": "After the wheat harvest in early July, no living crop is on the field until corn is planted the next May.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "crop_calendar"
         }
       ],
       "risks_needing_local_review": [
         {
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "The corn yield loss may depend on no-till and on leaving wheat straw. The authors suggest strip tillage, straw removal or red clover might avoid it, but did not test them.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "guidance"
         },
         {
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "Whether wheat pays depends on local prices and markets.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "guidance"
         }
       ],
       "information_gaps": [
@@ -254,67 +578,279 @@
       "name": "Corn, soybean, winter wheat with red clover",
       "description": "Same as above, with red clover seeded into the wheat in late winter. The clover keeps growing after the wheat harvest and through the next winter, and is killed before corn is planted.",
       "years": [
-        { "label": "Year 1: clover until spring, then corn", "crops": ["red_clover", "corn"], "covered_months": [1, 2, 3, 6, 7, 8, 9], "spans": [{ "crop": "red_clover", "months": [1, 2, 3] }, { "crop": "corn", "months": [6, 7, 8, 9] }], "events": [{ "month": 4, "type": "end", "crop": "red_clover" }, { "month": 5, "type": "plant", "crop": "corn" }, { "month": 10, "type": "harvest", "crop": "corn" }] },
-        { "label": "Year 2: soybeans, then wheat planted in fall", "crops": ["soybean", "winter_wheat"], "covered_months": [6, 7, 8, 9, 11, 12], "spans": [{ "crop": "soybean", "months": [6, 7, 8, 9] }, { "crop": "winter_wheat", "months": [11, 12] }], "events": [{ "month": 5, "type": "plant", "crop": "soybean" }, { "month": 10, "type": "harvest", "crop": "soybean" }, { "month": 10, "type": "plant", "crop": "winter_wheat" }] },
-        { "label": "Year 3: wheat, then clover after the July harvest", "crops": ["winter_wheat", "red_clover"], "covered_months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "spans": [{ "crop": "winter_wheat", "months": [1, 2, 3, 4, 5, 6] }, { "crop": "red_clover", "months": [7, 8, 9, 10, 11, 12] }], "events": [{ "month": 3, "type": "plant", "crop": "red_clover" }, { "month": 7, "type": "harvest", "crop": "winter_wheat" }] }
+        {
+          "label": "Year 1: clover until spring, then corn",
+          "crops": [
+            "red_clover",
+            "corn"
+          ],
+          "covered_months": [
+            1,
+            2,
+            3,
+            6,
+            7,
+            8,
+            9
+          ],
+          "spans": [
+            {
+              "crop": "red_clover",
+              "months": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "crop": "corn",
+              "months": [
+                6,
+                7,
+                8,
+                9
+              ]
+            }
+          ],
+          "events": [
+            {
+              "month": 4,
+              "type": "end",
+              "crop": "red_clover"
+            },
+            {
+              "month": 5,
+              "type": "plant",
+              "crop": "corn"
+            },
+            {
+              "month": 10,
+              "type": "harvest",
+              "crop": "corn"
+            }
+          ]
+        },
+        {
+          "label": "Year 2: soybeans, then wheat planted in fall",
+          "crops": [
+            "soybean",
+            "winter_wheat"
+          ],
+          "covered_months": [
+            6,
+            7,
+            8,
+            9,
+            11,
+            12
+          ],
+          "spans": [
+            {
+              "crop": "soybean",
+              "months": [
+                6,
+                7,
+                8,
+                9
+              ]
+            },
+            {
+              "crop": "winter_wheat",
+              "months": [
+                11,
+                12
+              ]
+            }
+          ],
+          "events": [
+            {
+              "month": 5,
+              "type": "plant",
+              "crop": "soybean"
+            },
+            {
+              "month": 10,
+              "type": "harvest",
+              "crop": "soybean"
+            },
+            {
+              "month": 10,
+              "type": "plant",
+              "crop": "winter_wheat"
+            }
+          ]
+        },
+        {
+          "label": "Year 3: wheat, then clover after the July harvest",
+          "crops": [
+            "winter_wheat",
+            "red_clover"
+          ],
+          "covered_months": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "spans": [
+            {
+              "crop": "winter_wheat",
+              "months": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            },
+            {
+              "crop": "red_clover",
+              "months": [
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            }
+          ],
+          "events": [
+            {
+              "month": 3,
+              "type": "plant",
+              "crop": "red_clover"
+            },
+            {
+              "month": 7,
+              "type": "harvest",
+              "crop": "winter_wheat"
+            }
+          ]
+        }
       ],
       "for_the_farm": [
         {
           "effect": "benefit",
-          "topics": ["income", "soil"],
+          "topics": [
+            "income",
+            "soil"
+          ],
           "fact": "Overwintered red clover in Ohio supplied about 75 pounds of nitrogen per acre by May 15, which reduces the fertilizer the following corn needs.",
-          "sources": ["sare-red-clover"]
+          "sources": [
+            "sare-red-clover"
+          ],
+          "strength": "measured_ohio"
         },
         {
           "effect": "benefit",
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "In a Wisconsin study, corn after red clover yielded the same as corn given 160 pounds of nitrogen fertilizer per acre.",
-          "sources": ["sare-red-clover"]
+          "sources": [
+            "sare-red-clover"
+          ],
+          "strength": "measured_other_state"
         },
         {
           "effect": "cost",
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "Clover seed, at 10 to 12 pounds per acre, plus the work of seeding it and killing it completely before the next crop.",
-          "sources": ["sare-red-clover"]
+          "sources": [
+            "sare-red-clover"
+          ],
+          "strength": "guidance"
         },
         {
           "effect": "cost",
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "The costs of adding wheat still apply: in the Ohio trial corn yielded less after wheat in five of eight site-years, and wheat is often less profitable than soybeans.",
-          "sources": ["huo-2022"]
+          "sources": [
+            "huo-2022"
+          ],
+          "strength": "measured_ohio",
+          "conditions": {
+            "tillage": "no-till"
+          }
         }
       ],
       "for_the_environment": [
         {
           "effect": "benefit",
-          "topics": ["water", "soil"],
+          "topics": [
+            "water",
+            "soil"
+          ],
           "fact": "A living crop is on the field in two winters out of three, and continuously from the fall wheat planting until the clover is killed about 17 months later.",
-          "sources": ["huo-2022", "sare-red-clover"]
+          "sources": [
+            "huo-2022",
+            "sare-red-clover"
+          ],
+          "strength": "crop_calendar"
         },
         {
           "effect": "benefit",
-          "topics": ["water"],
-          "tile_drained_only": true,
+          "topics": [
+            "water"
+          ],
           "fact": "Monitored Ohio fields with a crop growing from November to April lost about half as much nitrate through tile drains, roughly 18 pounds per acre a year less. Clover and wheat were among the crops in that study.",
-          "sources": ["osu-cover-2021"]
+          "sources": [
+            "osu-cover-2021"
+          ],
+          "strength": "measured_ohio",
+          "conditions": {
+            "tile_drained": true
+          }
         },
         {
           "effect": "neutral",
-          "topics": ["water"],
+          "topics": [
+            "water"
+          ],
           "fact": "Phosphorus losses did not change significantly: they went up in tile drainage and down in surface runoff.",
-          "sources": ["osu-cover-2021"]
+          "sources": [
+            "osu-cover-2021"
+          ],
+          "strength": "measured_ohio",
+          "conditions": {
+            "tile_drained": true
+          }
         }
       ],
       "risks_needing_local_review": [
         {
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "If the clover establishes poorly or dies over winter, weeds can take over.",
-          "sources": ["sare-red-clover"]
+          "sources": [
+            "sare-red-clover"
+          ],
+          "strength": "guidance"
         },
         {
-          "topics": ["income"],
+          "topics": [
+            "income"
+          ],
           "fact": "Clover that is not killed completely can carry over into soybeans, where it is hard to control and can transmit bud blight.",
-          "sources": ["sare-red-clover"]
+          "sources": [
+            "sare-red-clover"
+          ],
+          "strength": "guidance"
         }
       ],
       "information_gaps": [

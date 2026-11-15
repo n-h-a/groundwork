@@ -1,117 +1,51 @@
-import { useEffect, useState } from 'react'
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts'
+import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { GRID_GRAY, HEAT_ORANGE, RAIN_BLUE } from './chartColors'
 import { celsiusToFahrenheit, mmToInches } from './units'
-
-// Shape of the response from GET /api/climate.
-// The series are keyed by "YYYYMM", for example "202507" for July 2025.
-type ClimateResponse = {
-  location: { name: string }
-  source: string
-  temperature: Record<string, number>
-  precipitation: Record<string, number>
-}
-
-type MonthRow = {
-  month: string
-  temperature: number // average, in °F
-  precipitation: number // average monthly total, in inches
-}
+import type { WeatherResponse } from './weatherTypes'
 
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-const DAYS_IN_MONTH = [31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-// Average the values for one calendar month (1-12) across all years.
-// This also skips NASA POWER's extra month "13", which is the annual average.
-function averageForMonth(series: Record<string, number>, month: number): number {
-  const suffix = String(month).padStart(2, '0')
-  const values = Object.entries(series)
-    .filter(([key]) => key.endsWith(suffix))
-    .map(([, value]) => value)
-  return values.reduce((sum, value) => sum + value, 0) / values.length
-}
-
-function toMonthRows(data: ClimateResponse): MonthRow[] {
-  return MONTH_NAMES.map((name, index) => {
-    const temperature = averageForMonth(data.temperature, index + 1)
-    // NASA POWER gives precipitation as mm per day; multiply by the number
-    // of days to get a monthly total.
-    const precipitation = averageForMonth(data.precipitation, index + 1) * DAYS_IN_MONTH[index]
-    return {
-      month: name,
-      // NASA POWER data is metric; the page shows US units.
-      temperature: Math.round(celsiusToFahrenheit(temperature)),
-      precipitation: Math.round(mmToInches(precipitation) * 10) / 10,
-    }
-  })
-}
-
-function ClimateCharts() {
-  const [data, setData] = useState<ClimateResponse | null>(null)
-  const [error, setError] = useState(false)
-
-  useEffect(() => {
-    fetch('/api/climate')
-      .then((res) => {
-        if (!res.ok) throw new Error('Request failed')
-        return res.json()
-      })
-      .then((json: ClimateResponse) => setData(json))
-      .catch(() => setError(true))
-  }, [])
-
-  if (error) return <p>Could not load climate data.</p>
-  if (!data) return <p>Loading climate data...</p>
-
-  const rows = toMonthRows(data)
+// The average year at the field: monthly precipitation and daily highs.
+function ClimateCharts({ data }: { data: WeatherResponse }) {
+  // NASA POWER data is metric; the page shows US units.
+  const rows = data.monthly.map((row) => ({
+    month: MONTH_NAMES[row.month - 1],
+    high: Math.round(celsiusToFahrenheit(row.high_c)),
+    precipitation: Math.round(mmToInches(row.precipitation_mm) * 10) / 10,
+  }))
 
   return (
     <section>
-      <h2>Climate in {data.location.name}</h2>
-      <p>Monthly averages for 1991-2025. Source: {data.source}.</p>
+      <h2>An average year here</h2>
+      <p className="muted">Monthly averages for 1991 to 2025.</p>
 
-      <h3>Average temperature (°F)</h3>
-      <ResponsiveContainer width="100%" height={260}>
-        <LineChart data={rows} margin={{ top: 10, right: 20, bottom: 0, left: 0 }}>
-          <CartesianGrid stroke="#e5e4e0" vertical={false} />
-          <XAxis dataKey="month" tickLine={false} />
-          <YAxis tickLine={false} axisLine={false} width={40} />
-          <Tooltip formatter={(value) => [`${value} °F`, 'Temperature']} />
-          <Line
-            dataKey="temperature"
-            stroke="#eb6834"
-            strokeWidth={2}
-            dot={{ r: 4 }}
-            isAnimationActive={false}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+      <div className="period-charts">
+        <div>
+          <h3>Rain and melted snow (inches a month)</h3>
+          <ResponsiveContainer width="100%" height={240}>
+            <BarChart data={rows} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
+              <CartesianGrid stroke={GRID_GRAY} vertical={false} />
+              <XAxis dataKey="month" tickLine={false} />
+              <YAxis tickLine={false} axisLine={false} width={40} />
+              <Tooltip formatter={(value) => [`${value} in`, 'Precipitation']} />
+              <Bar dataKey="precipitation" fill={RAIN_BLUE} radius={[4, 4, 0, 0]} maxBarSize={32} isAnimationActive={false} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
 
-      <h3>Average precipitation, rain plus melted snow (inches per month)</h3>
-      <ResponsiveContainer width="100%" height={260}>
-        <BarChart data={rows} margin={{ top: 10, right: 20, bottom: 0, left: 0 }}>
-          <CartesianGrid stroke="#e5e4e0" vertical={false} />
-          <XAxis dataKey="month" tickLine={false} />
-          <YAxis tickLine={false} axisLine={false} width={40} />
-          <Tooltip formatter={(value) => [`${value} in`, 'Precipitation']} />
-          <Bar
-            dataKey="precipitation"
-            fill="#2a78d6"
-            radius={[4, 4, 0, 0]}
-            maxBarSize={32}
-            isAnimationActive={false}
-          />
-        </BarChart>
-      </ResponsiveContainer>
+        <div>
+          <h3>Average daily high (°F)</h3>
+          <ResponsiveContainer width="100%" height={240}>
+            <LineChart data={rows} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
+              <CartesianGrid stroke={GRID_GRAY} vertical={false} />
+              <XAxis dataKey="month" tickLine={false} />
+              <YAxis tickLine={false} axisLine={false} width={40} />
+              <Tooltip formatter={(value) => [`${value} °F`, 'Average high']} />
+              <Line dataKey="high" stroke={HEAT_ORANGE} strokeWidth={2} dot={{ r: 4 }} isAnimationActive={false} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
     </section>
   )
 }

@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import CropIcon from '../CropIcon'
 import type { CompareResponse, Rotation } from '../compareTypes'
-import type { TileDrained } from '../field'
 import { formatPrecipitation, mmToInches } from '../units'
 import { FactList } from './Evidence'
 import { MonthLetters, MonthStrip } from './MonthStrip'
@@ -38,20 +37,20 @@ function HeadToHead({
   alt,
   data,
   priority,
-  tileDrained,
   onClose,
 }: {
   yours: Rotation
   alt: Rotation
   data: CompareResponse
   priority: Priority
-  tileDrained: TileDrained
   onClose: () => void
 }) {
   const yoursPct = bareSoilPercent(yours)
   const altPct = bareSoilPercent(alt)
   const diff = altPct - yoursPct
-  const diffIn = mmToInches(alt.indicators.uncovered_precipitation.mm_per_year - yours.indicators.uncovered_precipitation.mm_per_year)
+  const yoursIn = mmToInches(yours.indicators.uncovered_precipitation.mm_per_year)
+  const altIn = mmToInches(alt.indicators.uncovered_precipitation.mm_per_year)
+  const diffIn = altIn - yoursIn
   const months = data.monthly_precipitation_mm
   const exposure = (rotation: Rotation, crop: string) => {
     const e = rotation.indicators.sensitive_exposure[crop]
@@ -72,20 +71,22 @@ function HeadToHead({
       <div className="h2h__band">
         <div>
           <span className="muted">Rain and snow on bare soil, yours</span>
-          <span className="h2h__pct">{yoursPct}%</span>
+          <span className="h2h__pct">{yoursIn.toFixed(1)} in</span>
+          <span className="muted">{yoursPct}% of the year's total</span>
         </div>
         <div className="h2h__diff">
-          <span className={diff < 0 ? 'h2h__diff-value h2h__diff-value--better' : 'h2h__diff-value'}>
-            {diff > 0 ? '+' : ''}
-            {diff} points
+          <span className={diffIn < 0 ? 'h2h__diff-value h2h__diff-value--better' : 'h2h__diff-value'}>
+            {diffIn > 0 ? '+' : diffIn < 0 ? '−' : ''}
+            {Math.abs(diffIn).toFixed(1)} in a year
           </span>
           <span className="muted">
-            {Math.abs(diffIn).toFixed(1)} in {diff < 0 ? 'less' : 'more'} rain landing on bare soil each year
+            {Math.abs(diff)} points {diff < 0 ? 'less' : 'more'} of the year's rain and snow on bare soil
           </span>
         </div>
         <div className="h2h__band-alt">
           <span className="muted">If you switched</span>
-          <span className="h2h__pct h2h__pct--alt">{altPct}%</span>
+          <span className="h2h__pct h2h__pct--alt">{altIn.toFixed(1)} in</span>
+          <span className="muted">{altPct}% of the year's total</span>
         </div>
       </div>
 
@@ -121,8 +122,8 @@ function HeadToHead({
           <Row
             key={topic.id}
             label={topic.label}
-            yours={<FactList facts={factsAbout(yours, topic.id as Exclude<Priority, 'all'>)} sources={data.sources} priority="all" tileDrained={tileDrained} />}
-            alt={<FactList facts={factsAbout(alt, topic.id as Exclude<Priority, 'all'>)} sources={data.sources} priority="all" tileDrained={tileDrained} />}
+            yours={<FactList facts={factsAbout(yours, topic.id as Exclude<Priority, 'all'>)} sources={data.sources} priority="all" />}
+            alt={<FactList facts={factsAbout(alt, topic.id as Exclude<Priority, 'all'>)} sources={data.sources} priority="all" />}
           />
         ))}
       </div>

@@ -4,7 +4,7 @@ import { useCompareData } from '../useCompareData'
 
 function ComparePage() {
   const field = useField()
-  const { data, error } = useCompareData(field.lat, field.lon)
+  const { data, error } = useCompareData(field.lat, field.lon, field.tillage, field.tile)
 
   if (error) return <p>Could not load the rotation comparison.</p>
   if (!data) return <p>Loading the rotation comparison...</p>

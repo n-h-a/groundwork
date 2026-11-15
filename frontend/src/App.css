@@ -292,6 +292,11 @@
   font-size: 4rem;
   font-weight: 700;
   line-height: 1;
+  white-space: nowrap;
+}
+
+.rot-row__unit {
+  font-size: 1.6rem;
 }
 
 .rot-row__pct-label {
@@ -550,13 +555,94 @@
   opacity: 0.35;
 }
 
-.tile-note {
-  display: block;
-  margin-top: 4px;
-  padding-left: 8px;
-  border-left: 3px solid var(--border-strong);
+/* Labels in front of a fact: Benefit/Cost and how it is known. */
+.fact-labels {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-right: 6px;
+  vertical-align: 1px;
+}
+
+.fact-labels .tag {
+  margin-right: 0;
+}
+
+.strength {
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.strength--measured_ohio {
+  background: var(--green);
+  color: #ffffff;
+}
+
+.strength--measured_other_state {
+  background: var(--green-light);
+  color: var(--green);
+}
+
+.strength--crop_calendar {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.strength--guidance {
+  border: 1px dashed var(--border-strong);
   color: var(--ink-secondary);
+}
+
+/* Whether the research fits the farmer's field. */
+.fit {
+  display: block;
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-left: 4px solid var(--border-strong);
+  border-radius: 0 6px 6px 0;
+  background: var(--surface);
   font-size: 0.85rem;
+}
+
+.fit--fits {
+  border-left-color: var(--green);
+  background: var(--green-light);
+}
+
+.fit--may_not_apply {
+  border-left-color: #b45309;
+  background: #fdf3e7;
+}
+
+.select-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+/* How it works: findings grouped by strength. */
+.strength-group {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+}
+
+.strength-group summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.strength-group .fact-list {
+  margin-top: 12px;
 }
 
 /* Head-to-head comparison. */
@@ -714,9 +800,44 @@
   }
 }
 
+.period-charts h3,
 .period-charts h4,
 .period-charts p {
   margin: 0 0 4px;
+}
+
+.change-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+@media (min-width: 900px) {
+  .change-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.change {
+  padding: 16px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+
+.change h3,
+.change p {
+  margin: 0 0 6px;
+}
+
+.change__figure {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.change__figure strong {
+  font-size: 1.6rem;
 }
 
 /* ---------- My field page ---------- */

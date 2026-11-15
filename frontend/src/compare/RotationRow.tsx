@@ -1,7 +1,6 @@
 import CropIcon from '../CropIcon'
 import type { CompareResponse, Rotation } from '../compareTypes'
-import type { TileDrained } from '../field'
-import { formatPrecipitation, formatTemperature, mmToInches } from '../units'
+import { formatTemperature, mmToInches } from '../units'
 import { RotationEvidence } from './Evidence'
 import { MonthLetters, MonthStrip, SeasonTimeline } from './MonthStrip'
 import { CROP_NAMES, bareSoilPercent, bareWintersText, cropIcons, formatMonthDay, hotYears } from './helpers'
@@ -15,7 +14,6 @@ function RotationRow({
   onToggle,
   onCompare,
   priority,
-  tileDrained,
 }: {
   rotation: Rotation
   yours: Rotation
@@ -24,24 +22,30 @@ function RotationRow({
   onToggle: () => void
   onCompare: () => void
   priority: Priority
-  tileDrained: TileDrained
 }) {
   const isYours = rotation.id === yours.id
   const pct = bareSoilPercent(rotation)
   const mm = rotation.indicators.uncovered_precipitation.mm_per_year
-  const diff = pct - bareSoilPercent(yours)
-  const diffIn = Math.abs(mmToInches(mm - yours.indicators.uncovered_precipitation.mm_per_year)).toFixed(1)
+  // Inches lead because they depend on the field's weather; the percentage
+  // mostly depends on the rotation's calendar and is much the same across Ohio.
+  const diffMm = mm - yours.indicators.uncovered_precipitation.mm_per_year
+  const diffIn = Math.abs(mmToInches(diffMm)).toFixed(1)
   const detailId = `detail-${rotation.id}`
 
   return (
     <article className={isYours ? 'rot-row rot-row--yours' : 'rot-row'}>
       <div className="rot-row__main">
         <div className="rot-row__figure">
-          <span className="rot-row__pct">{pct}%</span>
-          <span className="rot-row__pct-label">
-            <CropIcon name="rain" size={18} decorative /> of rain and snow on bare soil
+          <span className="rot-row__pct">
+            {mmToInches(mm).toFixed(1)}
+            <span className="rot-row__unit"> in</span>
           </span>
-          <span className="muted">{formatPrecipitation(mm)} a year</span>
+          <span className="rot-row__pct-label">
+            <CropIcon name="rain" size={18} decorative /> of rain and snow a year on bare soil
+          </span>
+          <span className="muted">
+            {pct}% of the year's total, {mm} mm
+          </span>
         </div>
 
         <div className="rot-row__text">
@@ -59,7 +63,7 @@ function RotationRow({
             {!isYours && (
               <>
                 {' · '}
-                {diff === 0 ? 'Same as yours' : `${Math.abs(diff)} points ${diff < 0 ? 'less' : 'more'} than yours (${diffIn} in a year)`}
+                {diffIn === '0.0' ? 'Same as yours' : `${diffIn} in a year ${diffMm < 0 ? 'less' : 'more'} than yours`}
               </>
             )}
           </p>
@@ -100,7 +104,7 @@ function RotationRow({
         <div id={detailId} className="rot-row__detail">
           <p className="muted">{rotation.description}</p>
           <SeasonTimeline years={rotation.years} monthlyMm={data.monthly_precipitation_mm} />
-          <RotationEvidence rotation={rotation} sources={data.sources} priority={priority} tileDrained={tileDrained} />
+          <RotationEvidence rotation={rotation} sources={data.sources} priority={priority} />
         </div>
       )}
     </article>

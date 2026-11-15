@@ -9,8 +9,12 @@ from datetime import date
 
 import cropland
 import modis
-from comparison import compare
+from typing import Literal
+
+from comparison import compare, drop_missing_days
+from evidence import add_fit
 from nasa_power import END_YEAR, START_YEAR, get_daily_data
+from weather import summarise_weather
 
 app = FastAPI(title="Groundwork API")
 
@@ -34,68 +38,62 @@ def health():
 # Pilot location for the first version of Groundwork.
 LOCATION = {"name": "Dayton, OH", "latitude": 39.76, "longitude": -84.19}
 
-# NASA POWER monthly API: https://power.larc.nasa.gov/docs/services/api/temporal/monthly/
-POWER_MONTHLY_URL = "https://power.larc.nasa.gov/api/temporal/monthly/point"
-
 ROTATIONS_FILE = Path(__file__).parent / "rotations.json"
+CLIMATE_SOURCE = f"NASA POWER daily API (MERRA-2), {START_YEAR}-{END_YEAR}"
 
 
-@app.get("/api/climate")
-def climate():
-    """Monthly temperature and precipitation for the pilot location, from NASA POWER."""
-    params = {
-        "parameters": "T2M,PRECTOTCORR",
-        "community": "AG",
-        "latitude": LOCATION["latitude"],
-        "longitude": LOCATION["longitude"],
-        "start": 1991,
-        "end": 2025,
-        "format": "JSON",
-    }
-
-    try:
-        response = httpx.get(POWER_MONTHLY_URL, params=params, timeout=30)
-        response.raise_for_status()
-    except httpx.HTTPError:
-        raise HTTPException(status_code=502, detail="Could not get data from NASA POWER")
-
-    data = response.json()
-    values = data["properties"]["parameter"]
-
-    # Keys are "YYYYMM". NASA POWER also returns month "13", which is the
-    # annual average; it is passed through unchanged.
-    return {
-        "location": LOCATION,
-        "source": "NASA POWER monthly API (MERRA-2)",
-        "units": {"temperature": "C", "precipitation": "mm/day"},
-        "temperature": values["T2M"],
-        "precipitation": values["PRECTOTCORR"],
-    }
-
-
-@app.get("/api/compare")
-def compare_rotations(lat: float | None = None, lon: float | None = None):
-    """Compare the rotations in rotations.json using daily NASA POWER data.
-
-    Without lat and lon, uses the Dayton pilot location.
-    """
+def field_or_pilot(lat, lon):
+    """The farmer's field if lat and lon are given, otherwise the Dayton pilot location."""
     if lat is None or lon is None:
-        location = LOCATION
-    else:
-        lat, lon = check_location(lat, lon)
-        location = {"name": "Your field", "latitude": lat, "longitude": lon}
+        return LOCATION, None
+    lat, lon = check_location(lat, lon)
+    return {"name": "Your field", "latitude": lat, "longitude": lon}, (lat, lon)
 
+
+def daily_weather(location):
+    """Daily NASA POWER data for a location, from the cache or the API."""
     # NASA POWER cells are about 50 km across, so 2 decimals is plenty for the cache.
     try:
         daily = get_daily_data(round(location["latitude"], 2), round(location["longitude"], 2))
     except httpx.HTTPError:
         raise HTTPException(status_code=502, detail="Could not get data from NASA POWER")
+    return daily
 
-    rotation_data = json.loads(ROTATIONS_FILE.read_text())
+
+@app.get("/api/weather")
+def weather(lat: float | None = None, lon: float | None = None):
+    """Monthly averages and year-by-year weather for a field, from NASA POWER."""
+    location, _ = field_or_pilot(lat, lon)
+    daily, days_removed = drop_missing_days(daily_weather(location))
+    return {
+        "location": location,
+        "source": CLIMATE_SOURCE,
+        "days_with_missing_data": days_removed,
+        **summarise_weather(daily),
+    }
+
+
+@app.get("/api/compare")
+def compare_rotations(
+    lat: float | None = None,
+    lon: float | None = None,
+    tillage: Literal["no-till", "tilled", "unsure"] = "unsure",
+    tile: Literal["yes", "no", "unsure"] = "unsure",
+):
+    """Compare the rotations in rotations.json using daily NASA POWER data.
+
+    Without lat and lon, uses the Dayton pilot location. tillage and tile are
+    the farmer's answers; each fact gets a "fit" saying whether the research
+    behind it matches their field.
+    """
+    location, field_point = field_or_pilot(lat, lon)
+    daily = daily_weather(location)
+
+    rotation_data = add_fit(json.loads(ROTATIONS_FILE.read_text()), tillage, tile, field_point)
 
     result = compare(rotation_data, daily)
     result["location"] = location
-    result["climate_source"] = f"NASA POWER daily API (MERRA-2), {START_YEAR}-{END_YEAR}"
+    result["climate_source"] = CLIMATE_SOURCE
     return result
 
 

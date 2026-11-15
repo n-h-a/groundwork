@@ -6,7 +6,7 @@ import { BASELINE_IDS, PRIORITIES, cropIcons } from './compare/helpers'
 import type { Priority } from './compare/helpers'
 import type { CompareResponse } from './compareTypes'
 import { useField } from './field'
-import type { TileDrained } from './field'
+import type { TileDrained, Tillage } from './field'
 
 function RotationComparison({ data, placeName }: { data: CompareResponse; placeName: string }) {
   const field = useField()
@@ -83,16 +83,27 @@ function RotationComparison({ data, placeName }: { data: CompareResponse; placeN
           )}
         </div>
 
-        <div className="controls__group controls__group--inline">
-          <label className="controls__label" htmlFor="tile-drained">
-            Is your field tile-drained?
-          </label>
-          <select id="tile-drained" value={field.tile} onChange={(event) => field.setTile(event.target.value as TileDrained)}>
-            <option value="unsure">Not sure</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-          <span className="muted">The nitrate figures were measured in tile-drained fields.</span>
+        <div className="controls__group">
+          <span className="controls__label">About your field</span>
+          <div className="controls__options">
+            <label className="select-label">
+              Field preparation
+              <select value={field.tillage} onChange={(event) => field.setTillage(event.target.value as Tillage)}>
+                <option value="unsure">Not sure</option>
+                <option value="no-till">No-till</option>
+                <option value="tilled">Tilled</option>
+              </select>
+            </label>
+            <label className="select-label">
+              Tile-drained
+              <select value={field.tile} onChange={(event) => field.setTile(event.target.value as TileDrained)}>
+                <option value="unsure">Not sure</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </label>
+          </div>
+          <p className="muted">Your answers decide which research findings fit your field.</p>
         </div>
       </div>
 
@@ -103,7 +114,6 @@ function RotationComparison({ data, placeName }: { data: CompareResponse; placeN
             alt={alt}
             data={data}
             priority={priority}
-            tileDrained={field.tile}
             onClose={() => setCompareId(null)}
           />
         )}
@@ -128,7 +138,6 @@ function RotationComparison({ data, placeName }: { data: CompareResponse; placeN
             onToggle={() => setOpenId(openId === rotation.id ? null : rotation.id)}
             onCompare={() => startComparison(rotation.id)}
             priority={priority}
-            tileDrained={field.tile}
           />
         ))}
       </div>
