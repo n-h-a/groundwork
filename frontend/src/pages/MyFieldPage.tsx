@@ -8,7 +8,7 @@ import { EXAMPLE_FIELD, isInOhio, useField } from '../field'
 import type { RotationId, TileDrained, Tillage } from '../field'
 import type { IconName } from '../icons'
 import { useApi } from '../useApi'
-import { formatPrecipitation } from '../units'
+import { formatPrecipitation, mmToInches } from '../units'
 
 // ---------- Shapes of the API responses ----------
 
@@ -194,8 +194,8 @@ function WintersFromSpace({ lat, lon, years }: { lat: number; lon: number; years
 
       {loading && (
         <p className="notice" role="status">
-          Looking up five winters of satellite measurements. The first time for a field this takes about 30
-          seconds.
+          Looking up five winters of satellite measurements. The first time for a field this can take up to a
+          minute.
         </p>
       )}
       {error && <p className="notice">Could not load the satellite data: {error}</p>}
@@ -248,15 +248,20 @@ function BareSoilRain({ lat, lon, rotation }: { lat: number; lon: number; rotati
       <p>How much of your field's yearly rain and snow falls in months when nothing is growing on it.</p>
       {loading && <p role="status">Loading NASA weather for your field...</p>}
       {error && <p className="notice">Could not load the weather data: {error}</p>}
+      {/* Inches lead, as on Compare: they depend on the field's weather, while
+          the percentage mostly depends on the rotation. */}
       {data && match && (
         <div className="big-figure">
           <span className="big-figure__value">
             <CropIcon name="rain" size={36} decorative />
-            {Math.round(match.indicators.uncovered_precipitation.share_of_annual * 100)}%
+            <span>
+              {mmToInches(match.indicators.uncovered_precipitation.mm_per_year).toFixed(1)}
+              <span className="big-figure__unit"> in</span>
+            </span>
           </span>
           <span>
-            {formatPrecipitation(match.indicators.uncovered_precipitation.mm_per_year)} of{' '}
-            {formatPrecipitation(data.annual_precipitation_mm)} a year, with your current rotation.
+            a year on bare soil with your current rotation: {Math.round(match.indicators.uncovered_precipitation.share_of_annual * 100)}%
+            of the {formatPrecipitation(data.annual_precipitation_mm)} that falls each year.
           </span>
         </div>
       )}

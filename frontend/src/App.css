@@ -1086,6 +1086,10 @@
   gap: 8px 20px;
 }
 
+.big-figure__unit {
+  font-size: 1.6rem;
+}
+
 .big-figure__value {
   display: flex;
   align-items: center;
