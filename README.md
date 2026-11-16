@@ -56,6 +56,7 @@ Other data: the [USDA NASS Cropland Data Layer](https://www.nass.usda.gov/Resear
 5. [Irrigating Soybean (G1367)](https://extensionpubs.unl.edu/publication/g1367/na/html/view). University of Nebraska-Lincoln Extension.
 6. [Crop Progress](https://esmis.nal.usda.gov/sites/default/release-files/795995/prog3026.pdf), reports released July 20 to August 10, 2026. USDA National Agricultural Statistics Service.
 7. [Managing Cover Crops Profitably, 3rd edition: Red Clover](https://www.sare.org/publications/managing-cover-crops-profitably/legume-cover-crops/red-clover/). SARE, 2007.
+8. [Remote Sensing, 2021 (NDVI alone is not enough to detect cover crops)](https://doi.org/10.3390/rs13101998).
 
 Every finding, its source, its strength and the conditions it was measured under are in [backend/rotations.json](backend/rotations.json).
 
